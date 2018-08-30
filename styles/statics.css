@@ -1,0 +1,257 @@
+body {
+	font-family: "Source Sans Pro", "Helvetica Neue LT Std", Arial, sans-serif;
+	background-color: #393f46;
+}
+
+#home { 
+    margin: 0.5em 1em;
+}
+
+#home a {
+	color: #ffffff;
+	font-weight: bold;
+}
+
+#app {
+	display: grid;
+	grid-template-columns: repeat(4, 16rem);
+	grid-template-rows: 32rem;
+	left: 50%;
+	margin: -17rem 0 0 -32rem;
+	padding: 0.25rem;
+	position: absolute;
+	top: 50%;
+}
+
+/* Canvas */
+
+#canvas-container {
+	height: 100%;
+	display: grid;
+	grid-template-rows: 1fr auto;
+	grid-gap: 0;
+	grid-column: span 2;
+}
+
+#canvas {
+	height: 100%;
+	overflow: hidden; 
+	width: 100%;
+}
+
+#canvas-settings-container {
+	display: flex;
+	flex-direction: column;
+	background-color: #212529;
+	padding: 0.5rem;
+	color: #ffffff;
+}
+
+@media screen and (max-width: 1000px) {
+	#app {
+		grid-template-columns: repeat(2, minmax(140px, 1fr));
+		grid-template-rows: 32rem 32rem;
+		margin: 0;
+		padding: 0;
+		top: 0;
+		left: 0;
+		width: 100%;
+	}
+	#canvas-container {
+		grid-template-rows: min-content 1fr;
+	}
+	#canvas {
+		grid-row: 2;
+	}
+	#canvas-settings-container {
+		flex-direction: column-reverse;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	#app {
+		grid-template-rows: 32rem 16rem 16rem;
+	}
+	#canvas-settings-container {
+		flex-direction: column-reverse;
+	}
+	#node-table, #member-table {
+		grid-column: span 2;
+	}
+}
+
+#canvas-header {
+	align-items: center; 
+	display: flex; 
+	font-weight: 700;
+	justify-content: space-between; 
+}
+
+#canvas-header button {
+	border: none; 
+	color: white; 
+	font-weight: 700;
+}
+
+#canvas-settings {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+#rect-canvas {
+	fill: #ffffff; 
+	stroke: #dee2e6;
+	stroke-width: 2px;
+}
+
+.axis {
+	stroke: #bbbbbb;
+	stroke-dasharray: 2,2;
+	stroke-width: 2px;
+}
+
+#canvas-container input[type='number'] {
+	text-align: center;
+    -moz-appearance: textfield;
+}
+
+svg text {
+	font-size: 0.8em;
+}
+
+.circle-node {
+	fill: #000;
+	stroke: #000;
+}
+
+.path-force {
+	marker-end: url(#head);
+	stroke: #000;
+	stroke-width: 2px;
+}
+
+.path-member {
+	stroke: #000000;
+	stroke-width: 2px; 
+}
+
+.triangle-support {
+	fill: #000000aa;
+}
+
+/* Table */
+
+#node-table,
+#member-table {
+	background-color: white;
+	display: grid; 
+	grid-template-rows: min-content 1fr; 
+	margin: 0;
+}
+
+th {
+	grid-column: span 5;
+}
+
+.row-submission {
+	display: grid; 
+	grid: auto / 1.5fr 3fr 3fr 1.75fr 1.75fr 17px;
+}
+
+tbody {
+	overflow-y: scroll;
+}
+
+tr {
+	display: grid;
+	grid: auto / 1.5fr 3fr 3fr 1.75fr 1.75fr;
+}
+
+tr .cell-button {
+	grid-column: span 2;
+	justify-content: flex-end;
+}
+
+tr .row-options {
+	border: none;
+	padding-top: 0;
+}
+
+td .cell-input {
+	padding: .25rem .125rem .25rem .5rem !important;
+}
+
+td .cell-input[type='number'] {
+    -moz-appearance: textfield !important;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+/* Number input spinner */
+
+.btn-spinner {
+	background-color: white; 
+	display: grid; 
+	grid-gap: 0; 
+	grid-template-rows: 50% 50%;
+	width: 1em; 
+}
+
+.btn-spinner button {
+	line-height: 1em !important;
+	margin: 0 !important;
+	padding: 0 !important; 
+}
+
+.btn-spinner button:first-child {
+	border-radius: 0 0.2rem 0 0 !important;
+}
+
+.btn-spinner button:last-child {
+	border-radius: 0 0 0.2rem 0 !important;
+	margin-top: -1px !important; 
+}
+
+/* td .cell-input[type='number']::-moz-selection {
+	background: white;
+}
+
+td .cell-input[type='number']:focus::-moz-selection {
+	color: white;
+	background: highlight;
+} */
+
+td {
+	align-items: center;
+	display: flex;
+	justify-content: flex-start;
+	padding: 0.2rem !important; 
+}
+
+.submit, .delete, .options {
+	background-color: white;
+	height: 1.6rem;
+	padding: 0;
+	width: 1.6rem;
+}
+
+.options {
+	border-radius: .25rem 0 0 .25rem;
+	border-right: none;
+}
+
+.delete {
+	border-radius: 0 .25rem .25rem 0;
+}
+
+td label {
+	margin-left: 1.25rem;
+}
+
+td .form-check-input {
+	margin-left: 0;
+}

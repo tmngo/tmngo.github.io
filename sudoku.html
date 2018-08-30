@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title>su·do·ku</title>
+  
+  <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles/sudoku.css">
+    
+  <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+  <script src='scripts/sudoku.js'></script>
+  
+</head>
+<body>
+
+  <header style="display: flex; justify-content: space-between; width: 100%;">
+    <div id="home">
+      <a href="https://ngotm.github.io">ngotm.github.io</a>
+    </div>
+    <div id="log-container">
+      <div id="control">
+        <div>
+          <button type="button" id="set" class="btn btn-primary">Set 1</button>
+          <button type="button" id="submit" class="btn btn-primary">Solve</button>
+          <button type="button" id="lock" class="btn btn-primary" data-toggle="button" aria-pressed="true" autocomplete="off">Lock</button>
+          <button type="button" id="check-cell" class="btn btn-primary">Check</button>
+          <button type="button" id="board-clear" class="btn btn-secondary">Clear</button>
+          <button type="button" id="logview" class="btn btn-secondary" data-toggle="button" aria-pressed="false" autocomplete="off">Show Log</button>
+        </div>
+        <p id="log">log</p>  
+      </div>
+    </div>
+  </header>
+
+  <div id="main" class="container">
+  
+    <!-- row 1 -->
+    <div class="sudoku-row row no-gutters"> 
+      <div class="col cell"><input type="text" class="cell-input form-control r1 c1 b1" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r1 c2 b1" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r1 c3 b1" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r1 c4 b2" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r1 c5 b2" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r1 c6 b2" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r1 c7 b3" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r1 c8 b3" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r1 c9 b3" /></div>
+    </div>
+    
+    <!-- row 2 -->
+    <div class="sudoku-row row no-gutters"> 
+      <div class="col cell"><input type="text" class="cell-input form-control r2 c1 b1" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r2 c2 b1" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r2 c3 b1" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r2 c4 b2" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r2 c5 b2" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r2 c6 b2" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r2 c7 b3" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r2 c8 b3" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r2 c9 b3" /></div>
+    </div>
+    
+    <!-- row 3 -->
+    <div class="sudoku-row row no-gutters"> 
+      <div class="col cell"><input type="text" class="cell-input form-control r3 c1 b1" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r3 c2 b1" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r3 c3 b1" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r3 c4 b2" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r3 c5 b2" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r3 c6 b2" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r3 c7 b3" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r3 c8 b3" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r3 c9 b3" /></div>
+    </div>
+    
+    <!-- row 4 -->
+    <div class="sudoku-row row no-gutters"> 
+      <div class="col cell"><input type="text" class="cell-input form-control r4 c1 b4" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r4 c2 b4" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r4 c3 b4" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r4 c4 b5" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r4 c5 b5" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r4 c6 b5" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r4 c7 b6" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r4 c8 b6" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r4 c9 b6" /></div>
+    </div>
+    
+    <!-- row 5 -->
+    <div class="sudoku-row row no-gutters"> 
+      <div class="col cell"><input type="text" class="cell-input form-control r5 c1 b4" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r5 c2 b4" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r5 c3 b4" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r5 c4 b5" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r5 c5 b5" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r5 c6 b5" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r5 c7 b6" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r5 c8 b6" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r5 c9 b6" /></div>
+    </div>
+    
+    <!-- row 6 -->
+    <div class="sudoku-row row no-gutters"> 
+      <div class="col cell"><input type="text" class="cell-input form-control r6 c1 b4" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r6 c2 b4" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r6 c3 b4" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r6 c4 b5" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r6 c5 b5" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r6 c6 b5" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r6 c7 b6" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r6 c8 b6" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r6 c9 b6" /></div>
+    </div>
+    
+    <!-- row 7 -->
+    <div class="sudoku-row row no-gutters"> 
+      <div class="col cell"><input type="text" class="cell-input form-control r7 c1 b7" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r7 c2 b7" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r7 c3 b7" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r7 c4 b8" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r7 c5 b8" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r7 c6 b8" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r7 c7 b9" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r7 c8 b9" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r7 c9 b9" /></div>
+    </div>
+    
+    <!-- row 8 -->
+    <div class="sudoku-row row no-gutters"> 
+      <div class="col cell"><input type="text" class="cell-input form-control r8 c1 b7" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r8 c2 b7" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r8 c3 b7" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r8 c4 b8" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r8 c5 b8" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r8 c6 b8" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r8 c7 b9" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r8 c8 b9" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r8 c9 b9" /></div>
+    </div>
+    
+    <!-- row 9 -->
+    <div class="sudoku-row row no-gutters"> 
+      <div class="col cell"><input type="text" class="cell-input form-control r9 c1 b7" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r9 c2 b7" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r9 c3 b7" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r9 c4 b8" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r9 c5 b8" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r9 c6 b8" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r9 c7 b9" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r9 c8 b9" /></div>
+      <div class="col cell"><input type="text" class="cell-input form-control r9 c9 b9" /></div>
+    </div>
+
+  </div>
+</body>
+</html>

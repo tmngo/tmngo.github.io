@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+
+  <title>cal·cu·la·tor</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles/calculator.css">
+  
+  <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+  <script  src="scripts/calculator.js"></script>
+  
+</head>
+<body>
+  
+  <div id="log-container">
+    <button type="button" id="logview" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off">Show Log</button>
+    <button type="button" id="logclear" class="btn btn-secondary" data-toggle="button" aria-pressed="true" autocomplete="off">Clear</button>
+    <p id="log"></p>  
+  </div>
+  
+  <div id="main" class="container">
+  
+    <div class="row"> 
+      <div id="output" class="col"> 
+        postfix output
+      </div>
+    </div>
+    <div class="row"> 
+      <div id="display" class="col"> 
+        infix output
+      </div>
+    </div>
+
+    <div class="row">
+      <button id="parenL" class="col btn">(</button>
+      <button id="parenR" class="col btn">)</button>
+      <button id="delete" class="col btn"><i class="fas fa-long-arrow-alt-left"></i></button>
+      <button id="clear" class="col btn">AC</button>
+    </div>
+    <div class="row">
+      <button id="sin" class="col btn">sin</button>
+      <button id="cos" class="col btn">cos</button>
+      <button id="tan" class="col btn">tan</button>
+    </div>
+    <div class="row">
+      <button id="pi" class="col btn">&pi;</button>
+      <button id="euler" class="col btn"><em>e</em></button>
+      <button id="sqrt" class="col btn">&radic;</button>
+      <button id="exponent" class="col btn">^</button>
+    </div>
+    <div class="row">
+      <button id="seven" class="col btn btn-outline-light">7</button>
+      <button id="eight" class="col btn btn-outline-light">8</button>
+      <button id="nine" class="col btn btn-outline-light">9</button>
+      <button id="divide" class="col btn">/</button>
+    </div>
+    <div class="row">
+      <button id="four" class="col btn btn-outline-light">4</button>
+      <button id="five" class="col btn btn-outline-light">5</button>
+      <button id="six" class="col btn btn-outline-light">6</button>
+      <button id="multiply" class="col btn">x</button>
+    </div>
+    <div class="row">
+        <button id="one" class="col btn btn-outline-light">1</button>
+        <button id="two" class="col btn btn-outline-light">2</button>
+        <button id="three" class="col btn btn-outline-light">3</button>
+        <button id="subtract" class="col btn">-</button>
+    </div>
+    <div class="row">
+      <button id="zero" class="col btn btn-outline-light">0</button>
+      <button id="decimal" class="col btn">.</button>
+      <button id="equals" class="col btn">=</button>
+      <button id="add" class="col btn">+</button>
+    </div>
+    
+  </div>
+</body>
+
+</html>
