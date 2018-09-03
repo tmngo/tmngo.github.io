@@ -2,7 +2,7 @@
 
 struc-ture - a simple 2D structural analysis tool
 
-https://ngotm.github.io/statics
+https://ngotm.github.io/structure
 
 Current features:
 - solves 2D trusses composed of pin joints and tension/compression members
