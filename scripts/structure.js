@@ -76,17 +76,17 @@ Vue.component('node-row', {
 						@click="$emit('remove')">&#x00d7;</button>
 			</td>
 			<input-number class="cell row-options" v-show="showOptions" :node="node" :input-value="'loadX'">
-				<div class="input-group-text">
+				<div class="input-group-text" style="background-color: #ecc0c0">
 					<input style="height: 100%" type="checkbox" v-model="node.rx">
 				</div>
 			</input-number>
 			<input-number class="cell row-options" v-show="showOptions" :node="node" :input-value="'loadY'">
-				<div class="input-group-text">
+				<div class="input-group-text" style="background-color: #c0ecc0">
 					<input style="height: 100%" type="checkbox" v-model="node.ry">
 				</div>
 			</input-number>
 			<input-number class="cell row-options" v-show="showOptions" :node="node" :input-value="'loadZ'">
-				<div class="input-group-text">
+				<div class="input-group-text" style="background-color: #c0d6ec">
 					<input style="height: 100%" type="checkbox" v-model="node.rz">
 				</div>
 			</input-number>
@@ -236,13 +236,15 @@ Vue.component('element-row', {
 					v-show="showOptions" :node="element" :input-value="'iz'">
 				<div class="input-group-text">I<sub>z</sub></div>
 			</input-number>
-			<td class="cell form-check form-check-inline row-options" v-show="showOptions">
+			<td class="cell form-check form-check-inline row-options" style="justify-content: flex-start" v-show="showOptions">
 				<input title="rigid start connection" class="form-check-input" type="checkbox" 
 						v-model="element.startRigid">
-				<label title="rigid start connection" class="form-check-label">Start rigidity</label>
+				<label title="rigid start connection" class="form-check-label">Rigid start</label>
+			</td>
+			<td class="cell form-check form-check-inline row-options" style="justify-content: flex-start" v-show="showOptions">
 				<input title="rigid end connection" class="form-check-input" type="checkbox" 
 						v-model="element.endRigid">
-				<label title="rigid end connection" class="form-check-label">End rigidity</label>
+				<label title="rigid end connection" class="form-check-label">Rigid end</label>
 			</td>
 		</tr>
 	`
@@ -286,13 +288,18 @@ Vue.component('node-circle', {
 		},
 		reactionXTriangle() {		
 			return (this.x - 6) + ',' + (this.y) + ' ' 
-					+ (this.x - 11) + ',' + (this.y - 5) + ' ' 
-					+ (this.x - 11) + ',' + (this.y + 5);
+					+ (this.x - 11) + ',' + (this.y - 4) + ' ' 
+					+ (this.x - 11) + ',' + (this.y + 4);
 		},
 		reactionYTriangle() {
 			return (this.x) + ',' + (this.y + 6) + ' ' 
-					+ (this.x + 5) + ',' + (this.y + 11) + ' ' 
-					+ (this.x - 5) + ',' + (this.y + 11);
+					+ (this.x + 4) + ',' + (this.y + 11) + ' ' 
+					+ (this.x - 4) + ',' + (this.y + 11);
+		},
+		reactionZTriangle() {
+			return (this.x - 3.54) + ',' + (this.y + 3.54) + ' ' 
+					+ (this.x - 9.9) + ',' + (this.y + 4.24) + ' ' 
+					+ (this.x - 4.24) + ',' + (this.y + 9.9);
 		},
 		forcePathDefinition() {
 			if (this.f === 0) return "";
@@ -332,11 +339,13 @@ Vue.component('node-circle', {
 			>{{ fRounded }}</text>
 			<polygon class="triangle-support" v-show="node.rx && view.supports" 
 					:points="reactionXTriangle" style="fill: #B22E0999"></polygon>
-			<text v-show="view.reactions && node.rx" :x="x - 20" :y="y + 3" text-anchor="end" fill="#B22E09">{{ rxRounded }}</text>
+			<text v-show="view.reactions && node.rx" :x="x - 20" :y="y + 3" text-anchor="end" fill="#B42E09">{{ rxRounded }}</text>
 			<polygon class="triangle-support" v-show="node.ry && view.supports" 
 					:points="reactionYTriangle" style="fill: #72B22A99"></polygon>
-			<text v-show="view.reactions && node.ry" :x="x" :y="y + 25" text-anchor="middle" fill="#72B22A">{{ ryRounded }}</text>
-			<text v-show="view.reactions && node.rz" :x="x - 20" :y="y + 25" text-anchor="end" fill="#4167FF">{{ rzRounded }}</text>
+			<text v-show="view.reactions && node.ry" :x="x" :y="y + 25" text-anchor="middle" fill="#52A23A">{{ ryRounded }}</text>
+			<polygon class="triangle-support" v-show="node.rz && view.supports" 
+					:points="reactionZTriangle" style="fill: #4167FF99"></polygon>
+			<text v-show="view.reactions && node.rz" :x="x - 20" :y="y + 25" text-anchor="end" fill="#4167B7">{{ rzRounded }}</text>
 		</svg>
 	`
 });
@@ -528,51 +537,6 @@ let app = new Vue({
 			return arr;
 		},
 
-		/* k2 () {
-			let size  = this.dof.length;
-			let k = arr = Array(size).fill().map(() => Array(size).fill(0));
-			for (let i = 0; i < this.elements.length; i++) {
-				let m = this.elements[i];
-
-				let dx = m.end.x - m.start.x;
-				let dy = m.end.y - m.start.y;
-				let l = math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-
-				let t = [
-					[dx/l, dy/l, 0, 0], 
-					[0, 0, dx/l, dy/l],
-				];
-				let kLocal = math.multiply([[1, -1],[-1, 1]], m.e * m.a / l);
-				let kGlobal = math.multiply(math.transpose(t), kLocal, t);
-
-				let x1 = this.getDOFNumber(m.start, m, "fx");	
-				let y1 = this.getDOFNumber(m.start, m, "fy");	
-				let x2 = this.getDOFNumber(m.end, m, "fx");	
-				let y2 = this.getDOFNumber(m.end, m, "fy");	
-
-				k[x1][x1] += kGlobal[0][0];
-				k[x1][y1] += kGlobal[0][1];
-				k[x1][x2] += kGlobal[0][2];
-				k[x1][y2] += kGlobal[0][3];
-
-				k[y1][x1] += kGlobal[1][0];
-				k[y1][y1] += kGlobal[1][1];
-				k[y1][x2] += kGlobal[1][2];
-				k[y1][y2] += kGlobal[1][3];
-
-				k[x2][x1] += kGlobal[2][0];
-				k[x2][y1] += kGlobal[2][1];
-				k[x2][x2] += kGlobal[2][2];
-				k[x2][y2] += kGlobal[2][3];
-
-				k[y2][x1] += kGlobal[3][0];
-				k[y2][y1] += kGlobal[3][1];
-				k[y2][x2] += kGlobal[3][2];
-				k[y2][y2] += kGlobal[3][3];
-			}
-			return k;
-		}, */
-
 		k () {
 			let size  = this.dof.length;
 			let k = Array(size).fill().map(() => Array(size).fill(0));
@@ -631,6 +595,10 @@ let app = new Vue({
 		kSS () {
 			return math.subset(this.k, math.index(this.degreesS, this.degreesS));
 		},
+	
+		isStable() {
+			return (math.det(this.kFF) === 0) ? false : true;
+		},
 
 		qF () {
 			let arr = [];
@@ -647,13 +615,13 @@ let app = new Vue({
 			}
 			return arr;
 		},
-		
+
 		dF () {
-			return (math.det(this.kFF) === 0) ? [] : math.multiply(math.inv(this.kFF), math.transpose(this.qF));
+			return (!this.isStable) ? [] : math.multiply(math.inv(this.kFF), math.transpose(this.qF));
 		},
 
 		qS () {
-			return math.multiply(this.kSF, math.transpose(this.dF));
+			return (!this.isStable) ? [] : math.multiply(this.kSF, math.transpose(this.dF));
 		},
 
 		nodeReactions () {
@@ -725,15 +693,15 @@ let app = new Vue({
 			});
 		},
 
-		addElement(start, end, e = 1, a = 1, iz = 1) {
+		addElement(start, end, e = 1, a = 1, iz = 1, startRigid = true, endRigid = true) {
 			if (start !== "" && end !== "") {
 				let newElement = {
 					id: this.nextElementId--,
 					n: this.elements.length + 1,
 					start: start,
 					end: end,
-					startRigid: true,
-					endRigid: true,
+					startRigid: startRigid,
+					endRigid: endRigid,
 					e: e,
 					a: a,
 					iz: iz
@@ -753,9 +721,8 @@ let app = new Vue({
 			}
 		},
 
-		/* Returns the axial force in a element.
-		 */
 		getElementForce(element) {
+			if (!this.isStable) return NaN;
 			let dx = element.end.x - element.start.x;
 			let dy = element.end.y - element.start.y;
 			let l = math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
@@ -769,10 +736,11 @@ let app = new Vue({
 				d[this.getDOF(element.end, element, "fx").n], 
 				d[this.getDOF(element.end, element, "fy").n]
 			];
-			return (this.dF.length === 0) ? NaN : (element.e * element.a / l) * math.dot(t, dM);
+			return (element.e * element.a / l) * math.dot(t, dM);
 		},
 
 		getNodeReaction(node, dir) {
+			if (!this.isStable) return NaN;
 			let q = math.concat(this.qF, this.qS, 0);
 			let n = this.getDOF(node, null, dir).n;
 			return q[n];

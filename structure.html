@@ -41,6 +41,7 @@
 					:reactions="nodeReactions[index]"
 					:view="viewSettings"
 				></node-circle>
+				<text v-show="!isStable" :x="10" :y="20" fill="red">UNSTABLE</text>
 			</svg>
 			
 			<!-- Display Settings -->
