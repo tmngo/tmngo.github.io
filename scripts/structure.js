@@ -422,13 +422,15 @@ let app = new Vue({
 			appliedForces: true,
 			axes: true,
 			decimalPlaces: 2,
+			sigFigs: 3,
 			display: false,
 			elementForces: true,
 			nodeLabels: true,
 			x: 256,
 			y: 200,
 			reactions: true,
-			scale: 30,
+			scale: 3,
+			scaleMax: 10,
 			supports: true,
 		},
 		scroll: 0,
@@ -646,10 +648,10 @@ let app = new Vue({
 
 	},
 	mounted: function () {
-		this.addNode(4, 0, 0, -2);
-		this.addNode(0, 3, 0, 0, 0, true, true);
+		this.addNode(48, 0, 0, -2);
+		this.addNode(0, 36, 0, 0, 0, true, true);
 		this.addNode(0, 0, 0, 0, 0, true, true);
-		this.addNode(0, -3, 0, 0, 0, true, true);
+		this.addNode(0, -36, 0, 0, 0, true, true);
 		this.addElement(this.nodes[0], this.nodes[1]);
 		this.addElement(this.nodes[0], this.nodes[2]);
 		this.addElement(this.nodes[0], this.nodes[3]);
@@ -666,8 +668,8 @@ let app = new Vue({
 	}, */
 	methods: {
 
-		zoomCanvas (x) {
-			this.viewSettings.scale += x;
+		zoomCanvas (d) {
+			this.viewSettings.scale = Math.max(0, Math.min(this.viewSettings.scale + 0.1 * d, this.viewSettings.scaleMax));
 		},
 
 		getCanvasWidth() {
