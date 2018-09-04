@@ -11,6 +11,12 @@ body {
 	font-weight: bold;
 }
 
+header {
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%;
+}
+
 #main {
     background-color: #303030;
     position: absolute;

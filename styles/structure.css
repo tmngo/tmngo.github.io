@@ -48,6 +48,17 @@ body {
 	grid-area: 2 / 1 / end / end;
 }
 
+.row-submission {
+	background-color: #c6c8ca; 
+	border-top: 1px solid #32383e;
+	display: grid; 
+	grid: auto / repeat(9, 1fr) 17px;
+}
+
+.row-submission td {
+	border-top: none;
+}
+
 @media screen and (max-width: 1000px) {
 	#app {
 		grid-template-columns: repeat(2, minmax(140px, 1fr));
@@ -63,6 +74,9 @@ body {
 	#canvas-settings-container {
 		flex-direction: column-reverse;
 		grid-area: 1 / 1 / 2 / end;
+	}
+	.row-submission {
+		grid: auto / repeat(9, 1fr);
 	}
 }
 
@@ -96,10 +110,11 @@ body {
 }
 
 #canvas-settings {
+	font-size: 0.875rem;
 	background-color: #21252988;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 0.25rem 0.5rem;
+	grid-gap: 0.75rem 0.5rem;
 	padding: 0.5rem 1rem;
 }
 
@@ -162,11 +177,6 @@ th {
 	grid-column: 1 / end;
 }
 
-.row-submission {
-	display: grid; 
-	grid: auto / repeat(9, 1fr) 17px;
-}
-
 tbody {
 	overflow-y: scroll;
 }
@@ -202,7 +212,6 @@ td .cell-input {
 
 td .cell-input[type='number'] {
 	-moz-appearance: textfield !important;
-	border-radius: 0.2rem !important;
 }
 
 td .cell-input[type='number']:hover {
@@ -251,14 +260,19 @@ td {
 .submit, .delete, .options {
 	background-color: white;
 	padding: 0;
+}
+
+.submit {
 	width: 1.6rem;
 }
 
 .options {
 	border-radius: .25rem 0 0 .25rem;
 	border-right: none;
+	width: 1.6rem;
 }
 
 .delete {
 	border-radius: 0 .25rem .25rem 0;
+	width: 1.6rem;
 }

@@ -15,7 +15,7 @@ Vue.component('node-row-submission', {
 		},
 	},
 	template: `
-		<tr>
+		<tr style="">
 			<td></td>
 			<td class="cell">
 				<input 
@@ -43,7 +43,6 @@ Vue.component('node-row-submission', {
 					@click="submitNode" 
 				>+</button>
 			</td>
-			<td></td>
 		</tr>
 	`
 });
@@ -76,12 +75,12 @@ Vue.component('node-row', {
 						@click="$emit('remove')">&#x00d7;</button>
 			</td>
 			<input-number class="cell row-options" v-show="showOptions" :node="node" :input-value="'loadX'">
-				<div class="input-group-text" style="background-color: #ecc0c0">
+				<div class="input-group-text" style="background-color: #eccdcd">
 					<input style="height: 100%" type="checkbox" v-model="node.rx">
 				</div>
 			</input-number>
 			<input-number class="cell row-options" v-show="showOptions" :node="node" :input-value="'loadY'">
-				<div class="input-group-text" style="background-color: #c0ecc0">
+				<div class="input-group-text" style="background-color: #c0e9c0">
 					<input style="height: 100%" type="checkbox" v-model="node.ry">
 				</div>
 			</input-number>
@@ -102,11 +101,16 @@ Vue.component('input-number', {
 			step: 1,
 		};
 	},
+	computed: {
+  	hasSlotData() {
+    	return this.$slots.default;
+    }
+  },
 	template: `
-		<td >
+		<td>
 			<div class="input-group input-group-sm"
 					@mouseover="showSpinner=true"	@mouseleave="showSpinner=false">
-				<div class="input-group-prepend">
+				<div v-if="hasSlotData" class="input-group-prepend">
 					<slot></slot>
 				</div>
 				<input 
@@ -116,7 +120,7 @@ Vue.component('input-number', {
 					v-model.number="node[inputValue]"
 					@focus="$event.target.select()"
 				/>
-				<div v-show="showSpinner" class="input-group-append btn-spinner" >
+				<div v-if="showSpinner" class="input-group-append btn-spinner" >
 					<button class="btn btn-outline-secondary btn-increment" 
 							type="button" @click="node[inputValue]+=step" tabindex="-1"
 					>&#x25b5;</button>
@@ -176,7 +180,6 @@ Vue.component('element-row-submission', {
 				class="btn btn-outline-success submit" 
 				@click="submitElement" 
 			>+</button></td>
-			<td style="margin-right: 0px"></td>
 		</tr>
 	`
 });
@@ -323,19 +326,23 @@ Vue.component('node-circle', {
 				<marker id="head" orient="auto"
 					markerWidth="2" markerHeight="4"
 					refX="0.1" refY="2">
-					<path d="M0,0 V4 L2,2 Z" fill="black"/>
+					<path d="M0,0 V4 L2,2 Z" style="fill: #947Ebc"/>
 				</marker>
 			</defs>
-			<circle class="circle-node" :cx="x" :cy="y" r="1.5"></circle>
-			<text v-show="view.nodeLabels" :x="x + 5" :y="y + 10">{{ node.n }}</text>
+			<circle class="circle-node" :cx="x" :cy="y" r="1.5"/>
+			
+			<circle class="circle-node" :cx="x + 10" :cy="y - 7" r="6" style="fill: #fff6; stroke: #bbb"/>
+			<text v-show="view.nodeLabels" :x="x + 7" :y="y - 4" style="fill: #000">{{ node.n }}</text>
+			
 			<path 
 				class="path-force"
 				v-show="view.appliedForces && f !== 0"
 				:d="forcePathDefinition" 
-			></path>
+				style="stroke: #947Ebc"
+			/>
 			<text 
 				v-show="view.appliedForces && f !== 0" 
-				:x="forceTextX" :y="forceTextY" text-anchor="middle"
+				:x="forceTextX" :y="forceTextY" text-anchor="middle" style="fill: #947Ebc"
 			>{{ fRounded }}</text>
 			<polygon class="triangle-support" v-show="node.rx && view.supports" 
 					:points="reactionXTriangle" style="fill: #B22E0999"></polygon>
@@ -652,9 +659,9 @@ let app = new Vue({
 		this.addNode(0, 36, 0, 0, 0, true, true);
 		this.addNode(0, 0, 0, 0, 0, true, true);
 		this.addNode(0, -36, 0, 0, 0, true, true);
-		this.addElement(this.nodes[0], this.nodes[1]);
-		this.addElement(this.nodes[0], this.nodes[2]);
-		this.addElement(this.nodes[0], this.nodes[3]);
+		this.addElement(this.nodes[0], this.nodes[1], 1, 1, 1, false, false);
+		this.addElement(this.nodes[0], this.nodes[2], 1, 1, 1, false, false);
+		this.addElement(this.nodes[0], this.nodes[3], 1, 1, 1, false, false);
 		this.canvasW = this.getCanvasWidth();
 		this.canvasH = this.getCanvasHeight();
 		this.viewSettings.x = this.canvasW / 2;
