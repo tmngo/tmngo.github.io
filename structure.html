@@ -49,13 +49,13 @@
 
 					<div id="canvas-settings" v-show="viewSettings.display">
 
-						<div>Scale</div>
+						<div>Zoom</div>
 						<div style="grid-column: span 2">
 							<input type="range" class="form-control-range" 
-									min="0" max="100" v-model.number="viewSettings.scale">
+									:max="viewSettings.scaleMax" step="any" v-model.number="viewSettings.scale">
 						</div>
 
-						<div>Origin</div>
+						<div>Origin offset</div>
 						<div>
 							<input type="range" class="form-control-range" 
 									min="0" :max="canvasW" v-model.number="viewSettings.x">
