@@ -331,8 +331,8 @@ Vue.component('node-circle', {
 			</defs>
 			<circle class="circle-node" :cx="x" :cy="y" r="1.5"/>
 			
-			<circle class="circle-node" :cx="x + 10" :cy="y - 7" r="6" style="fill: #fff6; stroke: #bbb"/>
-			<text v-show="view.nodeLabels" :x="x + 7" :y="y - 4" style="fill: #000">{{ node.n }}</text>
+			<circle class="circle-node" :cx="x + 10" :cy="y - 7" r="6.5" style="fill: #fff9; stroke: #bbb"/>
+			<text v-show="view.nodeLabels" :x="x + 7" :y="y - 4" style="fill: #000; font-size: 0.625rem">{{ node.n }}</text>
 			
 			<path 
 				class="path-force"
@@ -606,7 +606,7 @@ let app = new Vue({
 		},
 	
 		isStable() {
-			return (math.det(this.kFF) === 0) ? false : true;
+			return !math.equal(math.det(this.kFF), 0);
 		},
 
 		qF () {
