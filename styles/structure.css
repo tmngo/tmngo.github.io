@@ -150,7 +150,8 @@ svg .circle-release {
 
 .path-force {
 	marker-end: url(#head);
-	stroke: #292724;
+	stroke: #947Ebc;
+	/* stroke: #292724; */
 	stroke-width: 2px;
 }
 

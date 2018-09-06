@@ -94,18 +94,40 @@ Vue.component('node-row', {
 });
 
 Vue.component('input-number', {
-	props: ['node', 'inputValue'],
+	props: {
+		node: Object,
+		inputValue: String,
+		step: {
+			type: Number,
+			default: 1,
+		}
+	},
 	data() {
 		return {
 			showSpinner: false,
-			step: 1,
+			timeout: null,
+			interval: null
 		};
 	},
 	computed: {
   	hasSlotData() {
     	return this.$slots.default;
     }
-  },
+	},
+	methods: {
+		increment(step) {
+			this.node[this.inputValue] += step;
+			this.timeout = setTimeout(() => {
+				this.interval = setInterval(() => { 
+					this.node[this.inputValue] += step;
+				}, 50);
+			}, 250);
+		}, 
+		clearTiming() {
+			clearTimeout(this.timeout);
+			clearInterval(this.interval);
+		}
+	},
 	template: `
 		<td>
 			<div class="input-group input-group-sm"
@@ -122,10 +144,10 @@ Vue.component('input-number', {
 				/>
 				<div v-if="showSpinner" class="input-group-append btn-spinner" >
 					<button class="btn btn-outline-secondary btn-increment" 
-							type="button" @click="node[inputValue]+=step" tabindex="-1"
+							type="button" @mousedown="increment(step)" @mouseup="clearTiming" @mouseleave="clearTiming" tabindex="-1"
 					>&#x25b5;</button>
 					<button class="btn btn-outline-secondary btn-decrement" 
-							type="button" @click="node[inputValue]-=step" tabindex="-1"
+							type="button" @mousedown="increment(-step)" @mouseup="clearTiming" @mouseleave="clearTiming" tabindex="-1"
 					>&#x25bf;</button>		
 				</div>
 			</div>
@@ -239,6 +261,10 @@ Vue.component('element-row', {
 					v-show="showOptions" :node="element" :input-value="'iz'">
 				<div class="input-group-text">I<sub>z</sub></div>
 			</input-number>
+			<input-number class="cell row-options" title="area, A" 
+					v-show="showOptions" :node="element" :input-value="'w'">
+				<div class="input-group-text">w</div>
+			</input-number>
 			<td class="cell form-check form-check-inline row-options" style="justify-content: flex-start" v-show="showOptions">
 				<input title="rigid start connection" class="form-check-input" type="checkbox" 
 						v-model="element.startRigid">
@@ -274,11 +300,17 @@ Vue.component('node-circle', {
 		fY () {
 			return (this.node.loadY === "") ? 0 : this.node.loadY;
 		},
+		mZ () {
+			return (this.node.loadZ === "") ? 0 : this.node.loadZ;
+		},
 		f () {
 			return math.sqrt(Math.pow(this.fX, 2) + Math.pow(this.fY, 2));
 		},
 		fRounded() {
 			return math.round(this.f, this.view.decimalPlaces);
+		},
+		mZRounded () {
+			return math.round(this.mZ, this.view.decimalPlaces) * math.sign(this.mZ);
 		},
 		rxRounded() {
 			return math.round(this.reactions.fx, this.view.decimalPlaces);
@@ -311,6 +343,12 @@ Vue.component('node-circle', {
 					+ (this.x - 10 * this.fX / this.f) + ',' 
 					+ (this.y + 10 * this.fY / this.f);
 		},
+		momentPathDefinition() {
+			if (this.mZ === 0) return "";
+			return 'M' + (this.x - 7.5) + ',' + (this.y + 13 * math.sign(this.mZ)) 
+					+ 'A 15 15 0 1 ' + ((math.sign(this.mZ) - 1) / -2)
+					+ (this.x - 7.5) + ',' + (this.y - 13 * math.sign(this.mZ));
+		},
 		forceTextX() {
 			if (this.f === 0) return 0;
 			return this.x - 55 * this.fX / this.f;
@@ -324,26 +362,39 @@ Vue.component('node-circle', {
 		<svg>
 			<defs>
 				<marker id="head" orient="auto"
-					markerWidth="2" markerHeight="4"
-					refX="0.1" refY="2">
-					<path d="M0,0 V4 L2,2 Z" style="fill: #947Ebc"/>
+					markerWidth="4" markerHeight="5"
+					refX="1.3" refY="2">
+					<path d="M0,0 L2,2 L0,4" style="stroke: #947Ebc; fill: none"/>
 				</marker>
 			</defs>
 			<circle class="circle-node" :cx="x" :cy="y" r="1.5"/>
 			
-			<circle class="circle-node" :cx="x + 10" :cy="y - 7" r="6.5" style="fill: #fff9; stroke: #bbb"/>
-			<text v-show="view.nodeLabels" :x="x + 7" :y="y - 4" style="fill: #000; font-size: 0.625rem">{{ node.n }}</text>
+			<circle class="circle-node" v-show="view.nodeLabels" :cx="x" :cy="y" r="5" style="fill: #fff; stroke: #000"/>
+			<text v-show="view.nodeLabels" :x="x" :y="y + 3.5" text-anchor="middle" style="fill: #000; font-size: 0.625rem">{{ node.n }}</text>
 			
 			<path 
 				class="path-force"
 				v-show="view.appliedForces && f !== 0"
 				:d="forcePathDefinition" 
-				style="stroke: #947Ebc"
 			/>
 			<text 
 				v-show="view.appliedForces && f !== 0" 
-				:x="forceTextX" :y="forceTextY" text-anchor="middle" style="fill: #947Ebc"
+				:x="forceTextX" :y="forceTextY" 
+				text-anchor="middle" style="fill: #947Ebc"
 			>{{ fRounded }}</text>
+
+			<path 
+				class="path-force"
+				v-show="view.appliedForces && mZ !== 0"
+				:d="momentPathDefinition"
+				style="fill: none;"
+			/>
+			<text 
+				v-show="view.appliedForces && mZ !== 0" 
+				:x="x + 13" :y="y - 13" 
+				style="fill: #947Ebc"
+			>{{ mZRounded }}</text>
+
 			<polygon class="triangle-support" v-show="node.rx && view.supports" 
 					:points="reactionXTriangle" style="fill: #B22E0999"></polygon>
 			<text v-show="view.reactions && node.rx" :x="x - 20" :y="y + 3" text-anchor="end" fill="#B42E09">{{ rxRounded }}</text>
@@ -453,106 +504,69 @@ let app = new Vue({
 			return 'M' + this.viewSettings.x + ',0L' + this.viewSettings.x + ',' + 1000;
 		},
 
-		dof () {
+		dofF () {
 			let n = 0;
 			let arr = [];
 			for (let i = 0; i < this.nodes.length; i++) {
 				let node = this.nodes[i];
-				if (!node.rx) {
-					arr.push({
-						n: n++, node: node, element: null, force: node.loadX, dir: "fx", support: false
-					});
-				}
-				if (!node.ry) {
-					arr.push({
-						n: n++,node: node, element: null, force: node.loadY, dir: "fy", support: false
-					});
-				}
+				if (!node.rx) arr.push({ n: n++, node: node, element: null, force: node.loadX, dir: "fx", support: false });
+				if (!node.ry) arr.push({ n: n++,node: node, element: null, force: node.loadY, dir: "fy", support: false });
 				
 				let hasRigid = false;
 				for (let j = 0; j < node.incElements.length; j++) {
 					let element = node.incElements[j];
-					if ((element.start === node && element.startRigid) || (element.end === node && element.endRigid)) {
-						hasRigid = true;
-					}
+					if ((element.start === node && element.startRigid) || (element.end === node && element.endRigid)) hasRigid = true;
 					if ((element.start === node && !element.startRigid) || (element.end === node && !element.endRigid)) {
-						arr.push({
-								n: n++, node: node, element: element, force: node.loadZ, dir: "mz", support: false
-						});
+						arr.push({ n: n++, node: node, element: element, force: node.loadZ, dir: "mz", support: false });
 					}
 				}
-				if (hasRigid && !node.rz) {
-					arr.push({
-						n: n++, node: node, element: null, force: node.loadZ, dir: "mz", support: false
-					});
-				}
-
+				if (hasRigid && !node.rz) arr.push({ n: n++, node: node, element: null, force: node.loadZ, dir: "mz", support: false });
 			}
+			return arr;
+		},
+
+		dofS () {
+			let n = this.nF;
+			let arr = [];
 			for (let i = 0; i < this.nodes.length; i++) {
 				let node = this.nodes[i];
-				if (node.rx) {
-					arr.push({
-						n: n++, node: node, element: null, force: node.loadX, dir: "fx", support: true
-					});
-				}
-				if (node.ry) {
-					arr.push({
-						n: n++, node: node, element: null, force: this.nodes[i].loadY, dir: "fy", support: true
-					});
-				}
+				if (node.rx) arr.push({ n: n++, node: node, element: null, force: node.loadX, dir: "fx", support: true });
+				if (node.ry) arr.push({ n: n++, node: node, element: null, force: this.nodes[i].loadY, dir: "fy", support: true });
 
 				let hasRigid = false;
 				for (let j = 0; j < node.incElements.length; j++) {
 					let element = node.incElements[j];
-					if ((element.start === node && element.startRigid) || (element.end === node && element.endRigid)) {
-						hasRigid = true;
-					}
+					if ((element.start === node && element.startRigid) || (element.end === node && element.endRigid)) hasRigid = true;
 				}
-				if (hasRigid && node.rz) {
-					arr.push({
-						n: n++, node: node, element: null, force: node.loadZ, dir: "mz", support: true
-					});
-				}				
-			}
-
-			return arr;
-		},
-
-		numDegreesF () {
-			let n = 0;
-			for (let i = 0; i < this.dof.length; i++) {
-				if (!this.dof[i].support) {
-					n++;
-				}
-			}
-			return n;
-		},
-		numDegreesS () {
-			return this.dof.length - this.numDegreesF;
-		},
-
-		degreesF () {
-			let arr = [];
-			for (let i = 0; i < this.numDegreesF; i++) {
-				arr.push(i);
+				if (hasRigid && node.rz) arr.push({ n: n++, node: node, element: null, force: node.loadZ, dir: "mz", support: true });		
 			}
 			return arr;
 		},
-		degreesS () {
-			let arr = [];
-			for (let i = this.numDegreesF; i < this.dof.length; i++) {
-				arr.push(i);
-			}
-			return arr;
+
+		dof () {
+			return this.dofF.concat(this.dofS);
+		},
+
+		nF () {
+			return this.dofF.length;
+		},
+		nS () {
+			return this.dofS.length;
+		},
+		keysF () {
+			return Array.from(this.dofF.keys());
+		},
+		keysS () {
+			return Array.from(this.dofS.keys()).map(x => x + this.nF);
 		},
 
 		k () {
 			let size  = this.dof.length;
-			let k = Array(size).fill().map(() => Array(size).fill(0));
-			for (let i = 0; i < this.elements.length; i++) {
-				let m = this.elements[i];
-				let dx = m.end.x - m.start.x;
-				let dy = m.end.y - m.start.y;
+			let arr = Array(size).fill().map(() => Array(size).fill(0));
+			for (let j = 0; j < this.elements.length; j++) {
+				let el = this.elements[j];
+				let dx = el.end.x - el.start.x;
+				let dy = el.end.y - el.start.y;
 				let l = math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 				let t = [
 					[dx/l, dy/l, 0, 0, 0, 0], 
@@ -562,99 +576,113 @@ let app = new Vue({
 					[0, 0, 0, -dy/l, dx/l, 0], 
 					[0, 0 , 0, 0, 0, 1]
 				];
-				let a = m.a;
-				let iz = m.iz;
+				let a = el.a;
+				let i = el.iz;
 				let l2 = l * l;
 				let kLocal = math.multiply([
 					[a, 0, 0, -a, 0, 0],
-					[0, 12 * iz / l2, 6 * iz / l, 0, -12 *  iz / l2, 6 * iz / l],
-					[0, 6 * iz / l, 4 * iz, 0, -6 *  iz / l, 2 * iz],
+					[0, 12*i/l2, 6*i/l, 0, -12*i/l2, 6*i/l],
+					[0, 6*i/l, 4*i, 0, -6*i/l, 2*i],
 					[-a, 0, 0, a, 0, 0],
-					[0, -12 * iz / l2, -6 * iz / l, 0, 12 *  iz / l2, -6 * iz / l],
-					[0, 6 * iz / l, 2 * iz, 0, -6 *  iz / l, 4 * iz],
-				], m.e / l);
+					[0, -12*i/l2, -6*i/l, 0, 12*i/l2, -6*i/l],
+					[0, 6*i/l, 2*i, 0, -6*i/l, 4*i],
+				], el.e / l);
 				let kGlobal = math.multiply(math.transpose(t), kLocal, t);
-
-				let x1 = this.getDOF(m.start, m, "fx").n;	
-				let y1 = this.getDOF(m.start, m, "fy").n;	
-				let z1 = this.getDOF(m.start, m, "mz").n;
-				let x2 = this.getDOF(m.end, m, "fx").n;	
-				let y2 = this.getDOF(m.end, m, "fy").n;	
-				let z2 = this.getDOF(m.end, m, "mz").n;
-				let d = [x1, y1, z1, x2, y2, z2];
-
+				let d = [
+					this.getDOF(el.start, el, "fx").n, 
+					this.getDOF(el.start, el, "fy").n, 
+					this.getDOF(el.start, el, "mz").n, 
+					this.getDOF(el.end, el, "fx").n, 
+					this.getDOF(el.end, el, "fy").n, 
+					this.getDOF(el.end, el, "mz").n
+				];
 				for (let r = 0; r < 6; r++) {
 					for (let c = 0; c < 6; c++) {
-						k[ d[r] ][ d[c] ] += kGlobal[r][c];
+						arr[ d[r] ][ d[c] ] += kGlobal[r][c];
 					}
 				}
 			}
-			return k;
+			return arr;
 		},
 
 		kFF () {
-			if (this.degreesF.length === 0) {
-				return 0;
-			};
-			return math.subset(this.k, math.index(this.degreesF, this.degreesF));
+			return math.subset(this.k, math.index(this.keysF, this.keysF));
 		},
 		kSF () {
-			return math.subset(this.k, math.index(this.degreesS, this.degreesF));
+			return math.subset(this.k, math.index(this.keysS, this.keysF));
 		},
+
 		kSS () {
-			return math.subset(this.k, math.index(this.degreesS, this.degreesS));
+			return math.subset(this.k, math.index(this.keysS, this.keysS));
 		},
-	
+
 		isStable() {
 			return !math.equal(math.det(this.kFF), 0);
 		},
 
 		qF () {
-			let arr = [];
-			for (let i = 0; i < this.numDegreesF; i++) {
-				arr.push(this.dof[i].force);
-			}
-			return arr;
-		},
-
-		dS () {
-			let arr = [];
-			for (let i = this.numDegreesF; i < this.dof.length; i++) {
-				arr.push(0);
-			}
-			return arr;
-		},
-
-		dF () {
-			return (!this.isStable) ? [] : math.multiply(math.inv(this.kFF), math.transpose(this.qF));
+			return this.dofF.map(deg => deg.force);
 		},
 
 		qS () {
 			return (!this.isStable) ? [] : math.multiply(this.kSF, math.transpose(this.dF));
 		},
 
-		nodeReactions () {
+		dF () {
+			return (!this.isStable) ? [] : math.multiply(math.inv(this.kFF), math.transpose(this.qF));
+		},
+		
+		dS () {
+			return Array(this.nS).fill(0);
+		},
+
+		qW () {
 			let arr = [];
-			for (let i = 0; i < this.nodes.length; i++) {
-				arr.push({
-					fx: this.getNodeReaction(this.nodes[i], "fx"),
-					fy: this.getNodeReaction(this.nodes[i], "fy"),
-					mz: this.getNodeReaction(this.nodes[i], "mz")
-				});
+			for (let i = 0; i < this.dof.length; i++) {
+				let deg = this.dof[i];
+				let equiv = 0;
+				for(let j = 0; j < deg.node.incElements.length; j++) {
+					let elem = deg.node.incElements[j];
+					let dx = elem.end.x - elem.start.x;
+					let dy = elem.end.y - elem.start.y;
+					let l = math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+						if (deg.dir === "fx") {
+							equiv += elem.w * l / 2 * (-dy / l);
+						} else if (deg.dir === "fy") {
+							equiv += elem.w * l / 2 * (dx / l);
+						}	else if (deg.node === elem.start && (deg.element === elem || (deg.element === null && elem.startRigid))) {
+							equiv += elem.w * l * l / 12;
+						} else if (deg.node === elem.end && (deg.element === elem || (deg.element === null && elem.endRigid))) {
+							equiv -= elem.w * l * l / 12;
+						}
+				}
+				arr.push(equiv);
 			}
 			return arr;
+		},
+
+		qWF () {
+			return math.subset(this.qW, math.index(this.keysF));
+		},
+
+		qWS () {
+			return math.subset(this.qW, math.index(this.keysS));
+		},
+		
+		nodeReactions () {
+			return this.nodes.map(n => ({ 
+				fx: this.getNodeReaction(n, "fx"),
+				fy: this.getNodeReaction(n, "fy"),
+				mz: this.getNodeReaction(n, "mz")
+			}))
 		},
 
 		elementForces () {
-			let arr = [];
-			for (let i = 0; i < this.elements.length; i++) {
-				arr.push(this.getElementForce(this.elements[i]));
-			}
-			return arr;
+			return this.elements.map(el => this.getElementForce(el))
 		},
 
 	},
-	mounted: function () {
+	created: function () {
 		this.addNode(48, 0, 0, -2);
 		this.addNode(0, 36, 0, 0, 0, true, true);
 		this.addNode(0, 0, 0, 0, 0, true, true);
@@ -662,6 +690,8 @@ let app = new Vue({
 		this.addElement(this.nodes[0], this.nodes[1], 1, 1, 1, false, false);
 		this.addElement(this.nodes[0], this.nodes[2], 1, 1, 1, false, false);
 		this.addElement(this.nodes[0], this.nodes[3], 1, 1, 1, false, false);
+	},
+	mounted: function () {
 		this.canvasW = this.getCanvasWidth();
 		this.canvasH = this.getCanvasHeight();
 		this.viewSettings.x = this.canvasW / 2;
@@ -682,6 +712,7 @@ let app = new Vue({
 		getCanvasWidth() {
 			return parseFloat(window.getComputedStyle(this.$refs.canvas)["width"]);
 		},
+
 		getCanvasHeight() {
 			return parseFloat(window.getComputedStyle(this.$refs.canvas)["height"]);
 		},
@@ -713,7 +744,8 @@ let app = new Vue({
 					endRigid: endRigid,
 					e: e,
 					a: a,
-					iz: iz
+					iz: iz,
+					w: 0,
 				}
 				this.elements.push(newElement);
 				start.incElements.push(newElement);
@@ -721,38 +753,45 @@ let app = new Vue({
 			}
 		},
 
-		getDOF(node, element, dir) {
+		getDOF(node, elem, dir) {
 			for (let i = 0; i < this.dof.length; i++) {
 				let d = this.dof[i];
-				if (d.node === node && d.dir === dir && (d.element === null || d.element === element || element === null)) {
+				if (d.node === node && d.dir === dir && (d.element === null || d.element === elem || elem === null)) {
 					return d;
 				}
 			}
 		},
 
-		getElementForce(element) {
+		getElementForce(elem) {
 			if (!this.isStable) return NaN;
-			let dx = element.end.x - element.start.x;
-			let dy = element.end.y - element.start.y;
+			let dx = elem.end.x - elem.start.x;
+			let dy = elem.end.y - elem.start.y;
 			let l = math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 
 			let t = [-dx/l, -dy/l, dx/l, dy/l];
-			let d = math.concat(this.dF, this.dS, 0);
+			let d = this.dF.concat(this.dS);
 
 			let dM = [
-				d[this.getDOF(element.start, element, "fx").n], 
-				d[this.getDOF(element.start, element, "fy").n],
-				d[this.getDOF(element.end, element, "fx").n], 
-				d[this.getDOF(element.end, element, "fy").n]
+				d[this.getDOF(elem.start, elem, "fx").n], 
+				d[this.getDOF(elem.start, elem, "fy").n],
+				d[this.getDOF(elem.end, elem, "fx").n], 
+				d[this.getDOF(elem.end, elem, "fy").n]
 			];
-			return (element.e * element.a / l) * math.dot(t, dM);
+			return (elem.e * elem.a / l) * math.dot(t, dM);
 		},
+
 
 		getNodeReaction(node, dir) {
 			if (!this.isStable) return NaN;
-			let q = math.concat(this.qF, this.qS, 0);
+			let q = this.qF.concat(this.qS);
 			let n = this.getDOF(node, null, dir).n;
 			return q[n];
+		},
+
+		getElementLength(elem) {
+			let dx = elem.end.x - elem.start.x;
+			let dy = elem.end.y - elem.start.y;
+			return math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 		},
 
 		removeNode(nodeArr, elementArr, node) {
@@ -778,14 +817,14 @@ let app = new Vue({
 			nodeArr.splice(index, 1);
 		},
 
-		removeElementIncidence(element) {
-			let incStart = element.start.incElements;	
-			let incEnd = element.end.incElements;
+		removeElementIncidence(elem) {
+			let incStart = elem.start.incElements;	
+			let incEnd = elem.end.incElements;
 			for (let i = 0; i < incStart.length; i++) {
-				if (incStart[i] === element) incStart.splice(i, 1);
+				if (incStart[i] === elem) incStart.splice(i, 1);
 			}
 			for (let j = 0; j < incEnd.length; j++) {
-				if (incEnd[j] === element) incEnd.splice(j, 1);
+				if (incEnd[j] === elem) incEnd.splice(j, 1);
 			}
 		},
 
