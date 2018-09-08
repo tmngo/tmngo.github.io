@@ -1,4 +1,33 @@
-Vue.component('node-row-submission', {
+Vue.component('table-array', {
+	props: ['heading', 'array'],
+	template: `
+		<table class="table table-sm">
+			<thead class="thead-dark">
+				<tr>
+					<th style="grid-column: span 9">
+						{{ heading }} ({{ array.length }}) 
+						<button 
+							class="btn btn-outline-dark" 
+							@click="$emit('expand')"
+							style="margin-left: 0.5rem; "
+						><i class="icon-unfold-more"></i></button>
+						<button 
+								class="btn btn-outline-dark" 
+								@click="$emit('collapse')"
+						><i class="icon-unfold-less"></i></button>
+					</th>
+					
+				</tr>
+				<slot name="header"></slot>
+			</thead>
+			<transition-group name="list" tag="tbody">
+				<slot></slot>
+			</transition-group>
+		</table>
+	`
+});
+
+Vue.component('node-row-add', {
 	props: ['nodes'],
 	data () {
 		return {
@@ -9,13 +38,13 @@ Vue.component('node-row-submission', {
 	},
 	methods: {
 		submitNode() {
-			this.$emit('submit-node', this.newNodeX, this.newNodeY);
+			this.$emit('submit', this.newNodeX, this.newNodeY);
 			this.newNodeX = '';
 			this.newNodeY = '';
 		},
 	},
 	template: `
-		<tr style="">
+		<tr class="table-dark row-submission">
 			<td></td>
 			<td class="cell">
 				<input 
@@ -41,7 +70,7 @@ Vue.component('node-row-submission', {
 					type="button" 
 					class="btn btn-outline-success submit" 
 					@click="submitNode" 
-				>+</button>
+				><b><i class="icon-add"></i></b></button>
 			</td>
 		</tr>
 	`
@@ -60,9 +89,8 @@ Vue.component('node-row', {
 		}
 	},
 	template: `
-		<tr>
-		
-			<td>
+		<tr class="list-item">
+			<td style="justify-content: flex-end">
 				<input class="cell-input form-control form-control-sm form-control-plaintext" 
 						type="text" v-model="node.n"/>
 			</td>
@@ -70,25 +98,27 @@ Vue.component('node-row', {
 			<input-number class="cell" :node="node" :input-value="'y'"></input-number>
 			<td class="cell-button">
 				<button class="btn btn-outline-secondary options" type="button" 
-						@click="showOptions=!showOptions">{{ optionsArrow }}</button>
+						@click="showOptions=!showOptions"><i :class="{ 'icon-expand-more': !showOptions, 'icon-expand-less': showOptions }"></i></button>
 				<button class="btn btn-outline-danger delete" type="button" 
-						@click="$emit('remove')">&#x00d7;</button>
+						@click="$emit('remove')"><i class="icon-close"></i></button>
 			</td>
-			<input-number class="cell row-options" v-show="showOptions" :node="node" :input-value="'loadX'">
-				<div class="input-group-text" style="background-color: #eccdcd">
-					<input style="height: 100%" type="checkbox" v-model="node.rx">
-				</div>
-			</input-number>
-			<input-number class="cell row-options" v-show="showOptions" :node="node" :input-value="'loadY'">
-				<div class="input-group-text" style="background-color: #c0e9c0">
-					<input style="height: 100%" type="checkbox" v-model="node.ry">
-				</div>
-			</input-number>
-			<input-number class="cell row-options" v-show="showOptions" :node="node" :input-value="'loadZ'">
-				<div class="input-group-text" style="background-color: #c0d6ec">
-					<input style="height: 100%" type="checkbox" v-model="node.rz">
-				</div>
-			</input-number>
+
+				<input-number class="cell row-options" v-show="showOptions" :node="node" :input-value="'loadX'">
+					<div class="input-group-text" style="background-color: #eccdcd">
+						<input style="height: 100%" type="checkbox" v-model="node.rx">
+					</div>
+				</input-number>
+				<input-number class="cell row-options" v-show="showOptions" :node="node" :input-value="'loadY'">
+					<div class="input-group-text" style="background-color: #c0e9c0">
+						<input style="height: 100%" type="checkbox" v-model="node.ry">
+					</div>
+				</input-number>
+				<input-number class="cell row-options" v-show="showOptions" :node="node" :input-value="'loadZ'">
+					<div class="input-group-text" style="background-color: #c0d6ec">
+						<input style="height: 100%" type="checkbox" v-model="node.rz">
+					</div>
+				</input-number>
+
 		</tr>
 	`
 });
@@ -165,7 +195,7 @@ Vue.component('input-checkbox', {
 	`
 });
 
-Vue.component('element-row-submission', {
+Vue.component('element-row-add', {
 	props: ['elements', 'nodes'],
 	data() {
 		return {
@@ -175,13 +205,13 @@ Vue.component('element-row-submission', {
 	},
 	methods: {
 		submitElement() {
-			this.$emit('submit-element', this.newStart, this.newEnd)
+			this.$emit('submit', this.newStart, this.newEnd)
 			this.newStart = ''
 			this.newEnd = ''
 		},
 	},
 	template: `
-		<tr>
+		<tr class="table-dark row-submission">
 			<td></td>
 			<td class="cell">
 				<select class="cell-input form-control form-control-sm" 
@@ -201,7 +231,7 @@ Vue.component('element-row-submission', {
 				type="button" 
 				class="btn btn-outline-success submit" 
 				@click="submitElement" 
-			>+</button></td>
+			><i class="icon-add"></i></button></td>
 		</tr>
 	`
 });
@@ -228,7 +258,7 @@ Vue.component('element-row', {
 		},
 	},
 	template: `
-		<tr>
+		<tr class="list-item">
 			<td>
 				<input class="cell-input form-control form-control-sm form-control-plaintext" 
 						type="text" v-model="element.n"/>
@@ -245,9 +275,9 @@ Vue.component('element-row', {
 			</td>
 			<td class="cell-button">
 				<button type="button" class="btn btn-outline-secondary options" 
-						@click="showOptions=!showOptions">{{ optionsArrow }}</button>
+						@click="showOptions=!showOptions"><i :class="{ 'icon-expand-more': !showOptions, 'icon-expand-less': showOptions }"></i></button>
 				<button type="button" class="btn btn-outline-danger delete"
-						 @click="$emit(\'remove\')">&#x00d7;</button>
+						 @click="$emit(\'remove\')"><i class="icon-close"></i></button>
 			</td>
 			<input-number class="cell row-options" title="elastic modulus, E" 
 					v-show="showOptions" :node="element" :input-value="'e'">
@@ -396,13 +426,13 @@ Vue.component('node-circle', {
 			>{{ mZRounded }}</text>
 
 			<polygon class="triangle-support" v-show="node.rx && view.supports" 
-					:points="reactionXTriangle" style="fill: #B22E0999"></polygon>
+					:points="reactionXTriangle" style="fill: #B22E0999"/>
 			<text v-show="view.reactions && node.rx" :x="x - 20" :y="y + 3" text-anchor="end" fill="#B42E09">{{ rxRounded }}</text>
 			<polygon class="triangle-support" v-show="node.ry && view.supports" 
-					:points="reactionYTriangle" style="fill: #72B22A99"></polygon>
+					:points="reactionYTriangle" style="fill: #72B22A99"/>
 			<text v-show="view.reactions && node.ry" :x="x" :y="y + 25" text-anchor="middle" fill="#52A23A">{{ ryRounded }}</text>
 			<polygon class="triangle-support" v-show="node.rz && view.supports" 
-					:points="reactionZTriangle" style="fill: #4167FF99"></polygon>
+					:points="reactionZTriangle" style="fill: #4167FF99"/>
 			<text v-show="view.reactions && node.rz" :x="x - 20" :y="y + 25" text-anchor="end" fill="#4167B7">{{ rzRounded }}</text>
 		</svg>
 	`
@@ -411,6 +441,10 @@ Vue.component('node-circle', {
 Vue.component('element-path', {
 	props: ['element', 'element-force', 'view'],
 	computed: {
+		l () {
+			return Math.sqrt((this.xEnd - this.xStart) * (this.xEnd - this.xStart) + 
+					(this.yEnd - this.yStart) * (this.yEnd - this.yStart));
+		},
 		xStart () {
 			return this.view.x + this.view.scale * this.element.start.x;
 		},
@@ -426,6 +460,17 @@ Vue.component('element-path', {
 		elementPathDefinition() {
 			return 'M' + (this.xStart) + ',' + (this.yStart) 
 					+ 'L' + (this.xEnd) + ',' + (this.yEnd);
+		},
+		wPathDefinition() {
+			let str = 'm' + 16 * (-this.yStart + this.yEnd) / this.l * Math.sign(this.element.w) + ',' + 16 * (-this.xEnd + this.xStart) / this.l * Math.sign(this.element.w)
+			+ 'l' + (this.xEnd - this.xStart) / 3 * Math.sign(this.element.w) + ',' + (this.yEnd - this.yStart) / 3 * Math.sign(this.element.w)
+			+ 'l' + (this.xEnd - this.xStart) / 3 * Math.sign(this.element.w) + ',' + (this.yEnd - this.yStart) / 3 * Math.sign(this.element.w)
+			+ 'l' + (this.xEnd - this.xStart) / 3 * Math.sign(this.element.w) + ',' + (this.yEnd - this.yStart) / 3 * Math.sign(this.element.w);
+			if (Math.sign(this.element.w) === 1) {
+				return 'M' + (this.xStart) + ',' + (this.yStart) + str;
+			} else {
+				return 'M' + (this.xEnd) + ',' + (this.yEnd) + str;
+			}
 		},
 		forceRounded () {
 			return math.round(this.elementForce, this.view.decimalPlaces);
@@ -457,12 +502,26 @@ Vue.component('element-path', {
 	},
 	template: `
 		<svg>
-			<path :id="'path' + element.id" class="path-element" :d="elementPathDefinition"></path>
-			<circle class="circle-release" v-show="!element.startRigid" :cx="xStartOffset" :cy="yStartOffset" r="2"></circle>
-			<circle class="circle-release" v-show="!element.endRigid" :cx="xEndOffset" :cy="yEndOffset" r="2"></circle>
-			<text :transform="this.transformList" v-show="view.elementForces">
+			<defs>
+				<marker id="arrow" orient="auto"
+					markerWidth="2" markerHeight="20"
+					refX="0" :refY="0">
+					<path :d="'M0,' + 0 + ' L0,' + 10" style="stroke: #947Ebc; fill: none" marker-end="url(#head)"/>
+				</marker>
+			</defs>
+			<path :id="'path' + element.id" class="path-element" :d="elementPathDefinition"/>
+			<path :id="'pathw' + element.id" v-show="element.w !== 0 && view.elementLoads" class="path-element-load" :d="wPathDefinition"/>
+
+			<circle class="circle-release" v-show="!element.startRigid" :cx="xStartOffset" :cy="yStartOffset" r="2"/>
+			<circle class="circle-release" v-show="!element.endRigid" :cx="xEndOffset" :cy="yEndOffset" r="2"/>
+			<text :transform="transformList" v-show="view.elementForces">
 				<textPath :href="'#path' + element.id" startOffset="50%" text-anchor="middle">
-					<tspan dy="-.25em">{{ this.forceRounded }}</tspan>
+					<tspan dy="-.25em">{{ forceRounded }}</tspan>
+				</textPath>
+			</text>
+			<text v-show="element.w !== 0 && view.elementLoads">
+				<textPath :href="'#pathw' + element.id" startOffset="50%" text-anchor="middle">
+					<tspan style="fill: #947Ebc" dy="-0.25em">{{ Math.abs(element.w) }}</tspan>
 				</textPath>
 			</text>
 		</svg>
@@ -483,6 +542,7 @@ let app = new Vue({
 			sigFigs: 3,
 			display: false,
 			elementForces: true,
+			elementLoads: true,
 			nodeLabels: true,
 			x: 256,
 			y: 200,
@@ -494,6 +554,9 @@ let app = new Vue({
 		scroll: 0,
 		canvasW: 512,
 		canvasH: 472,
+		captureToggle: false,
+		panX: 0,
+		panY: 0,
 	},
 	computed: {
 
@@ -589,12 +652,12 @@ let app = new Vue({
 				], el.e / l);
 				let kGlobal = math.multiply(math.transpose(t), kLocal, t);
 				let d = [
-					this.getDOF(el.start, el, "fx").n, 
-					this.getDOF(el.start, el, "fy").n, 
-					this.getDOF(el.start, el, "mz").n, 
-					this.getDOF(el.end, el, "fx").n, 
-					this.getDOF(el.end, el, "fy").n, 
-					this.getDOF(el.end, el, "mz").n
+					this.getDOF(el.start, "fx").n, 
+					this.getDOF(el.start, "fy").n, 
+					(!el.startRigid) ? this.getDOF(el.start, "mz", el).n : this.getDOF(el.start, "mz").n, 
+					this.getDOF(el.end, "fx").n, 
+					this.getDOF(el.end, "fy").n, 
+					(!el.endRigid) ? this.getDOF(el.end, "mz", el).n : this.getDOF(el.end, "mz").n
 				];
 				for (let r = 0; r < 6; r++) {
 					for (let c = 0; c < 6; c++) {
@@ -606,17 +669,21 @@ let app = new Vue({
 		},
 
 		kFF () {
+			if (this.k.length === 0 || this.nF === 0) return [];
 			return math.subset(this.k, math.index(this.keysF, this.keysF));
 		},
 		kSF () {
+			if (this.nF === 0 || this.nS === 0) return [];
 			return math.subset(this.k, math.index(this.keysS, this.keysF));
 		},
 
 		kSS () {
+			if (this.nF === 0 || this.nS === 0) return [];
 			return math.subset(this.k, math.index(this.keysS, this.keysS));
 		},
 
 		isStable() {
+			if (this.kFF.length === 0) return true;
 			return !math.equal(math.det(this.kFF), 0);
 		},
 
@@ -624,12 +691,18 @@ let app = new Vue({
 			return this.dofF.map(deg => deg.force);
 		},
 
+		qS0 () {
+			return this.dofS.map(deg => deg.force);
+		},
+
 		qS () {
-			return (!this.isStable) ? [] : math.multiply(this.kSF, math.transpose(this.dF));
+			if (this.kSF.length === 0 && math.transpose(this.dF).length === 0) return [];
+			return (!this.isStable) ? [] : math.subtract(math.add(math.multiply(this.kSF, math.transpose(this.dF)), this.qWS), this.qS0);
 		},
 
 		dF () {
-			return (!this.isStable) ? [] : math.multiply(math.inv(this.kFF), math.transpose(this.qF));
+			if (this.kFF.length === 0 && math.transpose(math.subtract(this.qF, this.qWF)).length === 0) return [];
+			return (!this.isStable) ? [] : math.multiply(math.inv(this.kFF), math.transpose(math.subtract(this.qF, this.qWF)));
 		},
 		
 		dS () {
@@ -662,6 +735,9 @@ let app = new Vue({
 		},
 
 		qWF () {
+			if (this.keysF.length === 0) {
+				return [];
+			}
 			return math.subset(this.qW, math.index(this.keysF));
 		},
 
@@ -734,7 +810,7 @@ let app = new Vue({
 		},
 
 		addElement(start, end, e = 1, a = 1, iz = 1, startRigid = true, endRigid = true) {
-			if (start !== "" && end !== "") {
+			if (start !== "" && end !== "" && (start != end)) {
 				let newElement = {
 					id: this.nextElementId--,
 					n: this.elements.length + 1,
@@ -753,13 +829,14 @@ let app = new Vue({
 			}
 		},
 
-		getDOF(node, elem, dir) {
+		getDOF(node, dir, elem = null) {
 			for (let i = 0; i < this.dof.length; i++) {
 				let d = this.dof[i];
-				if (d.node === node && d.dir === dir && (d.element === null || d.element === elem || elem === null)) {
+				if (d.node === node && d.dir === dir && (d.element === elem )) {
 					return d;
 				}
 			}
+			return null;
 		},
 
 		getElementForce(elem) {
@@ -772,10 +849,10 @@ let app = new Vue({
 			let d = this.dF.concat(this.dS);
 
 			let dM = [
-				d[this.getDOF(elem.start, elem, "fx").n], 
-				d[this.getDOF(elem.start, elem, "fy").n],
-				d[this.getDOF(elem.end, elem, "fx").n], 
-				d[this.getDOF(elem.end, elem, "fy").n]
+				d[this.getDOF(elem.start, "fx").n], 
+				d[this.getDOF(elem.start, "fy").n],
+				d[this.getDOF(elem.end, "fx").n], 
+				d[this.getDOF(elem.end, "fy").n]
 			];
 			return (elem.e * elem.a / l) * math.dot(t, dM);
 		},
@@ -784,8 +861,10 @@ let app = new Vue({
 		getNodeReaction(node, dir) {
 			if (!this.isStable) return NaN;
 			let q = this.qF.concat(this.qS);
-			let n = this.getDOF(node, null, dir).n;
-			return q[n];
+			let d = this.getDOF(node, dir);
+			if (d === null) return 0;
+			if (q.length === 0) return NaN;
+			return q[d.n];
 		},
 
 		getElementLength(elem) {
@@ -880,5 +959,48 @@ let app = new Vue({
 			return false;
 		},
 
-	}
+		expandNodes() {
+			this.$refs.nodeRow.map(n => n.showOptions = true);
+		},
+		collapseNodes() {
+			this.$refs.nodeRow.map(n => n.showOptions = false);
+		},
+		expandElems() {
+			this.$refs.elemRow.map(n => n.showOptions = true);
+		},
+		collapseElems() {
+			this.$refs.elemRow.map(n => n.showOptions = false);
+		},
+
+		
+		removeAllNodes() {
+			while (this.nodes.length > 0) {
+				this.removeNodeByIndex(this.nodes, this.elements, 0);
+			}
+		},
+		
+		removeAllElems() {
+			while (this.elements.length > 0) {
+				this.removeElementByIndex(this.elements, 0);
+			}
+		},
+
+		captureOn(evt) {
+			this.captureToggle = true;
+			this.panX = this.viewSettings.x - evt.x;
+			this.panY = this.viewSettings.y - evt.y;
+		},
+
+		captureOff(evt) {
+			this.captureToggle = false;
+		},
+
+		mo(evt) {
+			if (this.captureToggle) {
+				this.viewSettings.x = evt.x + this.panX;
+				this.viewSettings.y = evt.y + this.panY;
+			}
+		},
+
+	},
 });	

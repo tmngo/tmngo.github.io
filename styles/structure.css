@@ -15,10 +15,10 @@ body {
 
 #app {
 	display: grid;
-	grid-template-columns: repeat(2, 16rem) repeat(2, 18rem);
-	grid-template-rows: 32rem;
+	grid-template-columns: repeat(2, 16rem) repeat(2, 19rem);
+	grid-template-rows: 34rem;
 	left: 50%;
-	margin: -16rem 0 0 -34rem;
+	margin: -17rem 0 0 -34rem;
 	position: absolute;
 	top: 50%;
 }
@@ -101,12 +101,14 @@ body {
 	font-weight: 700;
 	justify-content: space-between; 
 	padding: 0.5rem 0.5rem 0.5rem 1rem;
+	z-index: 1;
 }
 
 #canvas-header button {
 	border: none; 
 	color: white; 
 	font-weight: 700;
+	
 }
 
 #canvas-settings {
@@ -135,7 +137,6 @@ svg .axis {
 
 svg text {
 	font-size: 0.75rem;
-	/* fill: #292724; */
 }
 
 svg .circle-node {
@@ -150,6 +151,7 @@ svg .circle-release {
 
 .path-force {
 	marker-end: url(#head);
+	
 	stroke: #947Ebc;
 	/* stroke: #292724; */
 	stroke-width: 2px;
@@ -158,6 +160,15 @@ svg .circle-release {
 .path-element {
 	stroke: #292724;
 	stroke-width: 2px; 
+}
+
+.path-element-load {
+	marker-end: url(#arrow);
+	marker-mid: url(#arrow);
+	marker-start: url(#arrow);
+	stroke: #947Ebc;
+	stroke-width: 1px; 
+	fill: none;
 }
 
 .triangle-support {
@@ -175,16 +186,47 @@ svg .circle-release {
 }
 
 th {
+	display: flex;
 	grid-column: 1 / end;
+	border: none !important;
+}
+
+th button {
+	border: none !important; 
+	color: white !important; 
+	font-weight: 700 !important;
+	height: 1.6em;
+	width: 1.6em;
+	padding: 0 !important;
 }
 
 tbody {
+	background-color: white;
+	
 	overflow-y: scroll;
+	position: relative;
+}
+
+thead {
+	background-color: #212529;
+}
+
+thead tr {
+	padding: 0em 0.5em;
+	border: none;
+}
+
+tbody tr {
+	background-color: rgba(0,0,0,.05);
+	margin: 0.5em 0.5em;
+	border-radius: 0.25rem;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 tr {
 	display: grid;
 	grid: auto / repeat(9, 1fr);
+	position: relative;
 }
 
 tr .cell-2 {
@@ -199,12 +241,20 @@ tr .cell {
 
 tr .cell-button {
 	grid-column: span 2;
-	justify-content: flex-end;
+	justify-content: flex-start;
 }
 
 tr .row-options {
 	border: none;
 	padding-top: 0;
+}
+
+td {
+	align-items: center;
+	display: flex;
+	justify-content: flex-start;
+	padding: 0.2rem !important; 
+	border-top: none !important; 
 }
 
 td .cell-input {
@@ -251,16 +301,14 @@ input[type=number]::-webkit-outer-spin-button {
 	border-top: none;
 }
 
-td {
-	align-items: center;
-	display: flex;
-	justify-content: flex-start;
-	padding: 0.2rem !important; 
-}
+
 
 .submit, .delete, .options {
 	background-color: white;
-	padding: 0;
+	line-height: 1;
+	height: 1.5rem;
+	padding: 0 !important;
+	font-size: 1rem;
 }
 
 .submit {
@@ -276,4 +324,28 @@ td {
 .delete {
 	border-radius: 0 .25rem .25rem 0;
 	width: 1.6rem;
+}
+
+/* Transitions */
+
+.list-item {
+	transition: all 0.1s;
+  }
+.list-enter, .list-leave-to {
+	opacity: 0;
+}
+.list-enter {
+	transform: translateY(-2rem);
+}
+.list-leave-active {
+	position: absolute;
+}
+
+
+.slide-fade-enter-active, .slide-fade-leave-active {
+	transition: all .3s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to {
+	transform: translateY(30px);
+	opacity: 0;
 }
