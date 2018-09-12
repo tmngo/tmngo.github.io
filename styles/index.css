@@ -1,19 +1,20 @@
 body {
-    font-family: "Source Sans Pro", "Helvetica Neue LT Std", Arial, sans-serif;
+    align-items: center;
     background-color: #393f46;
+    display: flex;
+    font-family: "Source Sans Pro", "Helvetica Neue LT Std", Arial, sans-serif;
+    height: 100vh;
+    justify-content: center;
 }
 
 #main {
     background-color: #ddd;
     display: grid;
-    grid-template-rows: 1.5fr repeat(2, 1fr);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-left: -10rem;
+    grid-template-rows: 1fr repeat(1, 1fr);
+    justify-content: center;
     margin-top: -10rem;
     outline: 0.5rem dotted #393f46;
-    outline-offset: -0.25rem;
+    outline-offset: -0.24rem;
     padding: 2rem;
 }
 
@@ -23,8 +24,7 @@ body {
 
 .entry {
     display: flex;
-    margin: 0;
-    padding-bottom: 0.125em;
+    flex-direction: column;
 }
 
 a {
@@ -32,5 +32,5 @@ a {
 }
 
 a:hover {
-    color: black;
+    color: #aa3333;
 }

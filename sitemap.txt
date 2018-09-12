@@ -1,4 +1,2 @@
 https://ngotm.github.io
-https://ngotm.github.io/calculator.html
-https://ngotm.github.io/sudoku.html
-https://ngotm.github.io/structure.html
+https://ngotm.github.io/struc/
