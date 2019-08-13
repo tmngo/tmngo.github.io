@@ -49,8 +49,8 @@ h2 {
     color: #383e41dd;
     font-size: 3.6rem;
     font-weight: bold;
-    letter-spacing: -0.5rem;
-    line-height: 0.67;
+    letter-spacing: -0.53rem;
+    line-height: 0.69;
 }
 
 h3 {
@@ -91,6 +91,7 @@ main {
     align-items: center;
     background-color: #FAFAD2;
     border: solid 1px #00000020;
+    border-top: none;
     border-radius: 6%;
     display: flex;
     justify-content: center;
@@ -103,9 +104,9 @@ main {
 }
 
 .square:hover {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25), 0 6px 6px rgba(0,0,0,0.22);
     color: #000000;
-    outline: 0.3rem dotted #383e4100;
+    outline: 0.3rem none #383e4100;
     outline-offset: -0.12rem;
     transform: translateY(-3px);
     transition: all 0.5s cubic-bezier(.25,.8,.25,1);
@@ -178,10 +179,13 @@ main {
 .square:nth-child(11n+2),
 .square:nth-child(11n+7) {
     background-color: rgb(255, 187, 0);
+    
 }
 
 .square:nth-child(11n+8) {
     background-color: #40e0d0;
+    /* border: solid #fefefe 0.7rem; */
+    /* border-radius: 0; */
 }
 
 .square:nth-child(6n+4) {
