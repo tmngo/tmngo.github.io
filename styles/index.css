@@ -28,7 +28,7 @@ body {
     background-color: #383e41;
     color: #383e41;
     display: flex;
-    font-family: "Fira Mono", "Helvetica Neue LT Std", Arial, sans-serif;
+    font-family: "Fira Mono", monospace;
     font-size: 1rem;
     font-weight: 400;
     flex-direction: column;
@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 h2 {
     color: #383e41dd;
     font-size: 3.6rem;
-    font-weight: bold;
+    font-weight: 700;
     letter-spacing: -0.53rem;
     line-height: 0.69;
 }
