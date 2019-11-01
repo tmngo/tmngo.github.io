@@ -7,6 +7,7 @@
 
 html {
     -webkit-text-size-adjust: 100%;
+    height: 100%;
 }
 
 *, ::after, ::before {
@@ -22,7 +23,8 @@ body {
     font-size: 1rem;
     font-weight: 400;
     flex-direction: column;
-    justify-content: center;
+    height: 100%;
+    justify-content: flex-start;
     line-height: 1.5;
     margin: 0;
     padding: 1rem;
@@ -43,7 +45,8 @@ h2 {
     line-height: 0.69;
 }
 
-h3 {
+h3, 
+h4 {
     color: #383e41dd;
     font-size: 3.6rem;
     font-weight: 500;
@@ -52,6 +55,10 @@ h3 {
     padding-right: 0.4rem;
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     width: min-content;
+}
+
+h4 {
+    font-size: 3rem;
 }
 
 p {
@@ -94,7 +101,8 @@ main {
     transition: outline-offset 0.5s cubic-bezier(.25,.8,.25,1);
 }
 
-.square:hover {
+.square-large:hover,
+.square-med:hover {
     box-shadow: 0 4px 8px rgba(0,0,0,0.25), 0 6px 6px rgba(0,0,0,0.22);
     color: #000000;
     outline: 0.3rem none #383e4100;
@@ -113,7 +121,8 @@ main {
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
-.square:hover h3 {
+.square:hover h3, 
+.square:hover h4 {
     box-shadow: 0px -7px 0px white inset;
     color: #ffffff;
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
@@ -158,28 +167,42 @@ main {
 }
 
 .cursor {
-    animation: blink 1.2s infinite;
+    animation: blink 1.6s infinite;
     font-size: 4.6rem;
     margin-left: 0.4rem;
 }
 
-.entry svg {
+.entry svg,
+.entry img {
     margin: 0;
     padding: 0;
     width: 100%;
 }
 
+
 .square:nth-child(7n-1) {
     background-color: #9ACD32;
+}
+
+.lime {
+    background-color: #9ACD32 !important;
 }
 
 .square:nth-child(11n+1) {
     background-color: #FA8072;
 }
 
+.salmon {
+    background-color: #FA8072 !important;
+}
+
 .square:nth-child(11n+2),
 .square:nth-child(11n+7) {
     background-color: rgb(255, 187, 0);
+}
+
+.honey {
+    background-color: rgb(255, 187, 0) !important;
     
 }
 
@@ -187,6 +210,11 @@ main {
     background-color: #40e0d0;
 }
 
+.curacao {
+    background-color: #40e0d0 !important;
+}
+
+.eggplant,
 .square:nth-child(6n+4) {
     background-color: #8065d5;
 }
@@ -195,7 +223,16 @@ main {
     background-color: #bb3fbb;
 }
 
+.fuchsia {
+    background-color: #bb3fbb !important;
+}
+
 .entry svg circle {
     fill: #383e41dd;
 }
 
+@media screen and (min-width: 1050px) {
+    body {
+        justify-content: center;
+    }
+}
