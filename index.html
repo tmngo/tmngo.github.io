@@ -5,100 +5,16 @@
 	<meta content="Tim Ngo's personal website." name="description">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="Tim Ngo on GitHub.">	
+	<meta name="description" content="Tim Ngo on GitHub.">
 	<link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500,700|Fira+Sans&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="styles/index.css">
+	<link rel="stylesheet" href="css/index.css">
 	<link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
-		<main>
-
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-
-			<a class="square square-med square-content mustard" href="https://timmngo.github.io">
-				<div>
-					<div style="overflow: visible" class="entry entry-first">
-						<h2 id="home">Tim Ngo</h2>
-						<h2 class="cursor">&#x2588;</h2>
-					</div>
-				</div>
-			</a>
-
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-			
-			<a class="square square-large square-content curacao" href="https://timmngo.github.io/struc/">
-				<div>
-					<div class="entry">
-						<h3>Struc</h3>
-						<p>A simple 2D structural analysis tool.</p>
-					</div>
-				</div>
-			</a>
-				
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-
-			<a class="square square-large square-content lime" href="https://timmngo.github.io/nona/">
-				<div>
-					<div class="entry">
-							<h3>Nona</h3>
-						<p>A 3D nonogram puzzle generator.</p>
-					</div>
-				</div>
-			</a>
-
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>	
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-
-			<div class="square square-med">
-				<div class="entry">
-					<img src="img/dots.png">
-				</div>
-			</div>
-
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-			<a class="square square-large square-content salmon" href="http://setset.herokuapp.com/">
-				<div>
-					<div class="entry">
-						<h3>Set×Set</h3>
-						<p>An online implementation of the card game Set.</p>
-					</div>
-				</div>
-			</a>
-			
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-
-			<a class="square square-large square-content fuchsia" href="https://timmngo.github.io/smoothlife-shader/">
-				<div>
-					<div class="entry">
-						<h4>SmoothLife</h4>
-						<p>A WebGL shader for SmoothLife.</p>
-					</div>
-				</div>
-			</a>
-		
-			<div class="square square-med">
-				<div class="entry">
-					<img src="img/dots.png">
-				</div>
-			</div>
-
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-			<div class="square"><div class="entry"><img src="img/dots.png"></div></div>
-
-			<div class="square square-med">
-				<div class="entry">
-					<img src="img/dots.png">
-				</div>
-			</div>
-
-	</main>
+	<main id ="root"></main>
+	<script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>	
+	<script type="text/babel" src="js/index.js"></script>
 </body>
 </html>
