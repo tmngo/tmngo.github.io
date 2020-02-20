@@ -40,7 +40,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h2 {
-    color: #383e41c0;
+    /* color: #383e41c0; */
     font-size: 3.2rem;
     font-weight: 700;
     letter-spacing: -0.53rem;
@@ -49,7 +49,7 @@ h2 {
 
 h3, 
 h4 {
-    color: #383e41dd;
+    /* color: #383e41dd; */
     font-size: 2.7rem;
     font-weight: 500;
     height: min-content;
@@ -65,6 +65,7 @@ h4 {
 }
 
 p {
+    /* color: #FAFAD2a0; */
     margin-bottom: 1rem;
     margin-top: 0;
     font-family: Fira Sans, sans-serif;
@@ -94,7 +95,7 @@ img {
 
 main > * {
     align-items: center;
-    background-color: #FAFAD2a0;
+    background-color: #FAFAD2b0;
     border-width: 1px 1px 2px 1px;
     border-style: solid;
     border-color: #00000030;
@@ -146,15 +147,22 @@ main > * {
 }
 
 .square-large {
-    border-width: 2px 2px 3px 2px;
+    /* border-width: 2px 2px 3px 2px; */
     grid-column: span 3;
     grid-row: span 3;
-    outline: 0.8rem dotted #383e41;
-    outline: none;
-    border-radius: 3px;
+    /* outline: 0.8rem dotted #383e41; */
+    /* outline: none; */
+    /* border-radius: 3px; */
     margin: 3px;
-    outline-offset: -0.34rem;
+    /* outline-offset: -0.34rem; */
     padding: 3rem;
+
+    outline-style: solid;
+    outline-width: 0.5rem;
+    border: none;
+    outline-offset: -0.6rem;
+    background: none;
+
 }
 
 .entry {
@@ -185,19 +193,29 @@ main > * {
 }
 
 .lime {
-    background-color: #9ACD32;
+    /* background-color: #9ACD32; */
+    outline-color: #9ACD32;
+    color: #9ACD32;
 }
 
 .salmon {
-    background-color: #FA8072;
+    outline-color: #Fc9072;
+    color: #Fc9072;
 }
 
 .mustard {
-    background-color: rgb(255, 187, 0);
+    outline-style: solid;
+    outline-width: 0.5rem;
+    outline-offset: -0.25rem;
+    background: none;
+    outline-color: rgb(255, 187, 0);
+    color: rgb(255, 187, 0);
 }
 
 .curacao {
-    background-color: #40e0d0;
+    /* background-color: #40e0d0; */
+    outline-color: #40e0d0;
+    color: #40e0d0;
 }
 
 .eggplant {
@@ -205,7 +223,8 @@ main > * {
 }
 
 .fuchsia {
-    background-color: #bb3fbb;
+    outline-color: #dd3fbb;
+    color: #dd3fbb;
 }
 
 @media screen and (max-width: 800px) {
