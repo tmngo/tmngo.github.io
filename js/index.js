@@ -1,39 +1,41 @@
-const name = 'Josh Perez';
 const element = <h1>Hello, {name}</h1>;
+
+function Header(props) {
+  return <header key={1} className={'header'}>
+    <a className={`square square-content entry entry-first ${props.class} ${props.color}`} href={props.href}>
+      <h2>{ props.title }</h2>
+    </a>
+  </header>
+}
+
+function Main() {
+  return <main key={2} className={'main'}>
+    { squareList }
+  </main>
+}
 
 function Square(props) {
   if (props.void === true) {
-    return <div key={props.key} className={`square square-void ${props.class} ${props.color}`}>
+    return <div key={props.key} className={`square square-void ${props.color}`}>
     <div className="entry">
     </div>
   </div>
   }
-  if (props.primary) {
-    return <a key={props.key} className={`square square-content ${props.class} ${props.color}`} href={props.href}>
-      <div>
-        <div className="entry entry-first">
-            <h2>{ props.title }</h2>
-        </div>
-      </div>
-    </a>
-  }
   if (props.title !== undefined) {
-    return <a key={props.key} className={`square ${props.class} ${props.color}`} href={props.href}>
-      <div>
-        <div className="entry">
-          {props.title === undefined  ? (
-            <img src="img/dots.png" />
-          ) : (
-            <React.Fragment>
-              <h4>{ props.title }</h4>
-              <p>{ props.description }</p>
-            </React.Fragment>	
-          )}
-        </div>
+    return <a key={props.key} className={`square ${props.color}`} href={props.href}>
+      <div className="entry">
+        {props.title === undefined  ? (
+          <img src="img/dots.png" />
+        ) : (
+          <React.Fragment>
+            <h4>{ props.title }</h4>
+            <p>{ props.description }</p>
+          </React.Fragment>	
+        )}
       </div>
     </a>
   }
-  return <div key={props.key} className={`square ${props.class} ${props.color}`}>
+  return <div key={props.key} className={`square ${props.color}`}>
     <div className="entry">
       {props.title === undefined  ? (
         <img src="img/dots.png" />
@@ -50,16 +52,6 @@ function Square(props) {
 const sizes = ["", "square-med", "square-large square-content"]
 
 const squareData = [
-  { size: 0, void: true },
-  { 
-    size: 1, 
-    color: "mustard",
-    title: "Tim Ngo", 
-    description: "", 
-    href: "https://timmngo.github.io", 
-    primary: true 
-  },
-  { size: 0, void: true },
   { 
     size: 2, 
     color: "curacao",
@@ -67,7 +59,6 @@ const squareData = [
     description: "A simple 2D structural analysis tool.", 
     href: "https://timmngo.github.io/struc/" 
   },
-  { size: 0 },
   { 
     size: 2, 
     color: "lime",
@@ -75,12 +66,6 @@ const squareData = [
     description: "A 3D nonogram puzzle generator.", 
     href: "https://timmngo.github.io/nona/" 
   },
-  { size: 0, void: true },
-  { size: 0 },
-  { size: 0 },
-  { size: 0, void: true },
-  { size: 1 },
-  { size: 0 },
   { 
     size: 2, 
     color: "salmon",
@@ -88,14 +73,6 @@ const squareData = [
     description: "An online implementation of the card game Set.", 
     href: "http://setset.herokuapp.com/" 
   },
-  { size: 0 },
-  { size: 0 },
-  { size: 0 },
-  { size: 0, void: true },
-  { size: 0 },
-  { size: 0, void: true },
-  { size: 0 },
-  { size: 0 },
   { 
     size: 2, 
     color: "fuchsia",	
@@ -103,26 +80,20 @@ const squareData = [
     description: "A WebGL shader for SmoothLife.", 
     href: "https://timmngo.github.io/smoothlife-shader/" 
   },
-  { size: 0 },
-  { size: 0 },
-  { size: 0, void: true },
-  { size: 0 },
-  { size: 1 },
-  { size: 0 },
-  { size: 0, void: true	 },
-  { size: 0 },
-  { size: 0, void: true },
-  { size: 0, void: true },
 ]
 
-const squareList = squareData.map((data, index) => Square(
+let squareList = squareData.map((data, index) => Square(
   Object.assign(data, {
-    key: index,
-    class: sizes[data.size],
+    key: index
   })
 ))
 
-ReactDOM.render(
-  squareList,
-  document.getElementById("root")
-);
+ReactDOM.render([
+  Header({ 
+    size: 1, 
+    color: "white",
+    title: "Tim\nNgo", 
+    href: "https://timmngo.github.io"
+  }), 
+  Main(squareList)
+], document.getElementById("root"));
