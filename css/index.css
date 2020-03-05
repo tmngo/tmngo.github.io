@@ -66,12 +66,12 @@ header {
     align-items: center;
     justify-content: center;
     margin-right: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 header a {
     outline-style: dotted;
-    outline-width: 0.15rem;
+    outline-width: 0.16rem;
     padding: 1rem;
     width: 6.7rem;
 }
@@ -105,23 +105,19 @@ main > * {
 }
 
 .lime {
-    outline-color: #9ACD32;
-    /* color: #9ACD32; */
+    color: #9ACD32;
 }
 
 .salmon {
-    outline-color: #Fc9072;
-    /* color: #Fc9072; */
+    color: #Fc9072;
 }
 
 .mustard {
-    /* outline-color: rgb(255, 187, 0); */
     color: rgb(255, 187, 0);
 }
 
 .curacao {
-    outline-color: #40e0d0;
-    /* color: #40e0d0; */
+    color: #40e0d0;
 }
 
 .eggplant {
@@ -129,8 +125,7 @@ main > * {
 }
 
 .fuchsia {
-    outline-color: #dd3fbb;
-    /* color: #dd3fbb; */
+    color: #dd3fbb;
 }
 
 @media screen and (min-width: 400px) {

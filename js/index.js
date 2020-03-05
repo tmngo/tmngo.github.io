@@ -54,28 +54,24 @@ const sizes = ["", "square-med", "square-large square-content"]
 const squareData = [
   { 
     size: 2, 
-    color: "curacao",
     title: "Struc", 
     description: "A simple 2D structural analysis tool.", 
     href: "https://timmngo.github.io/struc/" 
   },
   { 
     size: 2, 
-    color: "lime",
     title: "Nona", 
     description: "A 3D nonogram puzzle generator.", 
     href: "https://timmngo.github.io/nona/" 
   },
   { 
     size: 2, 
-    color: "salmon",
     title: "Set×Set", 
     description: "An online implementation of the card game Set.", 
     href: "http://setset.herokuapp.com/" 
   },
   { 
     size: 2, 
-    color: "fuchsia",	
     title: "SmoothLife", 
     description: "A WebGL shader for SmoothLife.", 
     href: "https://timmngo.github.io/smoothlife-shader/" 
