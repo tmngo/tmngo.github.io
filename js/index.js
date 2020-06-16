@@ -46,6 +46,11 @@ const EntryData = [
     href: "http://setset.herokuapp.com/" 
   },
   { 
+    title: "Babble", 
+    description: "A familiar word game.", 
+    href: "https://timmngo.github.io/babble/" 
+  },
+  { 
     title: "SmoothLife", 
     description: "A WebGL shader for SmoothLife.", 
     href: "https://timmngo.github.io/smoothlife-shader/" 
