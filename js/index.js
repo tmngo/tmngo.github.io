@@ -42,7 +42,7 @@ const EntryData = [
   },
   { 
     title: "Set×Set", 
-    description: "An online implementation of the card game Set.", 
+    description: "An online version of the card game Set.", 
     href: "http://setset.herokuapp.com/" 
   },
   { 

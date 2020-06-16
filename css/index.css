@@ -58,6 +58,7 @@ a {
     align-items: flex-start;
     display: flex;
     flex-direction: column;
+    margin: auto 0;
 }
 
 header {
@@ -77,10 +78,10 @@ header a {
 
 main {
     display: grid;
-    grid: repeat(4, 1fr) / auto-flow repeat(auto-fit, 120px);
-    grid-gap: 1rem;
+    grid: repeat(auto-fit, 1fr) / auto-flow repeat(auto-fit, 120px);
+    grid-gap: 1vh;
     height: 100%;
-    justify-content: start;
+    justify-content: flex-start;
     width: 100%;
 }
 
@@ -131,18 +132,13 @@ header:hover,
     body {
         align-items: center;
     }
-    #root {
-        margin-top: 4rem;
-    }
 }
 
 @media screen and (min-width: 540px) {
     body {
-        justify-content: center;
         background-color: #005743;
     }
     #root {
         flex-direction: row;
-        margin-top: 0;
     }
 }
