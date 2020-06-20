@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Luam';
+    src: url('./Luam-Bold.otf') format('opentype');
+    font-style: normal;
+    font-weight: 700;
+}
+
 html {
     -webkit-text-size-adjust: 100%;
     height: 100%;
@@ -11,7 +18,7 @@ html {
 
 body {
     align-items: flex-start;
-    background-color: #167746;
+    background-color: #005743;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -20,6 +27,7 @@ body {
     justify-content: flex-start;
     margin: 0;
     padding: 1rem;
+    font-size: 1rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -28,17 +36,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h2 {
-    font-family: "Fira Mono", monospace;
+    font-family: "Luam", sans-serif;
     font-size: 3.2rem;
-    font-weight: 700;
-    letter-spacing: -.53rem;
-    line-height: 2.2rem;
+    font-weight: bold;
+    text-transform: lowercase;
+    text-align: center;
+    line-height: 1.5rem;
     margin-bottom: .5rem;
 }
 
 h4 {
     font-size: 1.5rem;
-    font-weight: 400;
+    font-weight: bold;
     text-transform: lowercase;
     line-height: 1.5rem;
     transition: all .3s cubic-bezier(.25,.8,.25,1);
@@ -70,9 +79,10 @@ header {
 }
 
 header a {
-    outline-style: dotted;
-    outline-width: .16rem;
-    padding: 1rem;
+    border-style: dotted;
+    border-width: 0.2rem;
+    border-color: #fff9;
+    padding: 1.2rem 0 1rem 0;
     width: 6.7rem;
 }
 
@@ -95,6 +105,11 @@ header:hover,
     text-shadow: 0 2px 4px rgba(0,0,0,0.25), 0 3px 3px rgba(0,0,0,0.22);
     transform: translateY(-2px);
     transition: all 0.25s cubic-bezier(.25,.8,.25,1);
+    color: #fc9072;
+}
+
+header a:hover {
+    border-color: #fc9072;
 }
 
 .entry svg,
@@ -109,7 +124,7 @@ header:hover,
 }
 
 .salmon {
-    color: #Fc9072;
+    color: #fc9072;
 }
 
 .mustard {
@@ -135,9 +150,6 @@ header:hover,
 }
 
 @media screen and (min-width: 540px) {
-    body {
-        background-color: #005743;
-    }
     #root {
         flex-direction: row;
     }

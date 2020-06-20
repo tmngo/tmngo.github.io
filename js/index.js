@@ -65,7 +65,7 @@ let EntryList = EntryData.map((data, index) =>
 
 ReactDOM.render(
   [
-    e(Header, { title: "Tim\nNgo", href: "https://timmngo.github.io" }),
+    e(Header, { title: "Tim Ngo", href: "https://timmngo.github.io" }),
     e(Main, null, EntryList)
   ], 
   document.getElementById("root")
