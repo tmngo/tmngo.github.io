@@ -19,7 +19,7 @@ html {
 body {
     align-items: flex-start;
     background-color: #005743;
-    color: #fff;
+    color: #fffd;
     display: flex;
     flex-direction: column;
     font-family: "IBM Plex Sans", sans-serif;
@@ -28,6 +28,10 @@ body {
     margin: 0;
     padding: 1rem;
     font-size: 1rem;
+    background-image: url('../img/canvas-tile.png');
+    background-repeat: repeat;
+    background-size: 32rem;
+    background-blend-mode: multiply;
 }
 
 h1, h2, h3, h4, h5, h6 {
