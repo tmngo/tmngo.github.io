@@ -6,14 +6,28 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Tim Ngo on GitHub.">
-	<link href="https://fonts.googleapis.com/css?family=Fira+Mono:700|IBM+Plex+Sans&display=swap" rel="stylesheet"> 
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet"> 
 	<link rel="stylesheet" href="css/index.css">
 	<link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
-	<div id="root"></div>
-	<script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+	<div id="app">
+		<the-header
+			:title="'Tim Ngo'"
+			:href="'https://timmngo.github.io'"
+		></the-header>
+		<main>
+			<project-entry 
+				v-for="(entry, i) in entryList"
+				:title="entry.title"
+				:description="entry.description"
+				:href="entry.href"
+				:key="i"
+			></project-entry>
+		</main>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 	<script src="js/index.js"></script>
 </body>
 </html>

@@ -1,3 +1,10 @@
+:root {
+    --salmon: #fc9072;
+    --mustard: #ffbb00;
+    --forest: #005743;
+    --white-d: #fffd;
+}
+
 @font-face {
     font-family: 'Luam';
     src: url('./Luam-Bold.otf') format('opentype');
@@ -18,8 +25,8 @@ html {
 
 body {
     align-items: flex-start;
-    background-color: #005743;
-    color: #fffd;
+    background-color: var(--forest);
+    color: var(--white-d);
     display: flex;
     flex-direction: column;
     font-family: "IBM Plex Sans", sans-serif;
@@ -39,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
-h2 {
+h1 {
     font-family: "Luam", sans-serif;
     font-size: 3.2rem;
     font-weight: bold;
@@ -67,7 +74,7 @@ a {
     text-decoration: none;
 }
 
-#root {
+#app {
     align-items: flex-start;
     display: flex;
     flex-direction: column;
@@ -85,7 +92,7 @@ header {
 header a {
     border-style: dotted;
     border-width: 0.2rem;
-    border-color: #fff9;
+    border-color: var(--white-d);
     padding: 1.2rem 0 1rem 0;
     width: 6.7rem;
 }
@@ -109,11 +116,11 @@ header:hover,
     text-shadow: 0 2px 4px rgba(0,0,0,0.25), 0 3px 3px rgba(0,0,0,0.22);
     transform: translateY(-2px);
     transition: all 0.25s cubic-bezier(.25,.8,.25,1);
-    color: #fc9072;
+    color: var(--salmon);
 }
 
 header a:hover {
-    border-color: #fc9072;
+    border-color: var(--salmon);
 }
 
 .entry svg,
@@ -123,30 +130,6 @@ header a:hover {
     width: 100%;
 }
 
-.lime {
-    color: #9ACD32;
-}
-
-.salmon {
-    color: #fc9072;
-}
-
-.mustard {
-    color: #ffbb00;
-}
-
-.curacao {
-    color: #40e0d0;
-}
-
-.eggplant {
-    color: #8065d5;
-}
-
-.fuchsia {
-    color: #dd3fbb;
-}
-
 @media screen and (min-width: 400px) {
     body {
         align-items: center;
@@ -154,7 +137,7 @@ header a:hover {
 }
 
 @media screen and (min-width: 540px) {
-    #root {
+    #app {
         flex-direction: row;
     }
 }
