@@ -25,9 +25,9 @@ var app = new Vue({
   data: {
     entryList: [
       { 
-        title: "Struc", 
-        description: "A simple 2D structural analysis tool.", 
-        href: "https://timmngo.github.io/struc/" 
+        title: "Set×Set", 
+        description: "An online version of the card game Set.", 
+        href: "http://setset.herokuapp.com/" 
       },
       { 
         title: "Nona", 
@@ -35,14 +35,14 @@ var app = new Vue({
         href: "https://timmngo.github.io/nona/" 
       },
       { 
-        title: "Set×Set", 
-        description: "An online version of the card game Set.", 
-        href: "http://setset.herokuapp.com/" 
-      },
-      { 
         title: "Babble", 
         description: "A familiar word game.", 
         href: "https://timmngo.github.io/babble/" 
+      },
+      { 
+        title: "Struc", 
+        description: "A simple 2D structural analysis tool.", 
+        href: "https://timmngo.github.io/struc/" 
       },
       { 
         title: "SmoothLife", 
