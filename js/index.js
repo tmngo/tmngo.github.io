@@ -12,7 +12,7 @@ Vue.component('the-header', {
 Vue.component('project-entry', {
   props: ['href', 'title', 'description'],
   template: `<a :href="href" class="entry">
-    <h4>{{ title }}</h4>
+    <h2>{{ title }}</h2>
     <p>{{ description }}</p>
   </a>`
 })
@@ -23,7 +23,6 @@ Vue.component('project-entry', {
 var app = new Vue({
   el: '#app',
   data: {
-    message: 'Hello Vue!',
     entryList: [
       { 
         title: "Struc", 
@@ -49,6 +48,11 @@ var app = new Vue({
         title: "SmoothLife", 
         description: "A WebGL shader for SmoothLife.", 
         href: "https://timmngo.github.io/smoothlife-shader/" 
+      },
+      { 
+        title: "notes", 
+        description: "", 
+        href: "https://timmngo.github.io/notes/" 
       },
     ]
   }
