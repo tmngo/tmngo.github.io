@@ -32,27 +32,27 @@ var app = new Vue({
       { 
         title: "Nona", 
         description: "A 3D nonogram puzzle generator.", 
-        href: "https://timmngo.github.io/nona/" 
+        href: "/nona/" 
       },
       { 
         title: "Babble", 
         description: "A familiar word game.", 
-        href: "https://timmngo.github.io/babble/" 
+        href: "/babble/" 
       },
       { 
         title: "Struc", 
         description: "A simple 2D structural analysis tool.", 
-        href: "https://timmngo.github.io/struc/" 
+        href: "/struc/" 
       },
       { 
         title: "SmoothLife", 
         description: "A WebGL shader for SmoothLife.", 
-        href: "https://timmngo.github.io/smoothlife-shader/" 
+        href: "/smoothlife-shader/" 
       },
       { 
         title: "notes", 
         description: "", 
-        href: "https://timmngo.github.io/notes/" 
+        href: "/notes/" 
       },
     ]
   }
