@@ -1,3 +1,3 @@
-# timmngo.github.io
+# tmngo.github.io
 
-Tim Ngo's personal website. 
+My personal website.
