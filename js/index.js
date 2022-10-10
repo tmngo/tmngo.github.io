@@ -27,7 +27,7 @@ var app = new Vue({
       { 
         title: "Set×Set", 
         description: "An online version of the card game Set.", 
-        href: "http://setset.herokuapp.com/" 
+        href: "https://set-server.fly.dev/" 
       },
       { 
         title: "Nona", 
