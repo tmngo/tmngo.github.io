@@ -13,21 +13,11 @@
 </head>
 <body>
 	<div id="app">
-		<the-header
-			:title="'Tim Ngo'"
-			:href="'/'"
-		></the-header>
-		<main>
-			<project-entry 
-				v-for="(entry, i) in entryList"
-				:title="entry.title"
-				:description="entry.description"
-				:href="entry.href"
-				:key="i"
-			></project-entry>
-		</main>
+		<header>
+			<a href="/"><h1>Tim Ngo</h1></a>
+		</header>
+		<main id="main"></main>
 	</div>
-	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-	<script src="js/index.js"></script>
+	<script src="js/main.js"></script>
 </body>
 </html>
