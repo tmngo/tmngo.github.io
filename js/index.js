@@ -49,11 +49,11 @@ var app = new Vue({
         description: "A WebGL shader for SmoothLife.", 
         href: "/smoothlife-shader/" 
       },
-      { 
-        title: "notes", 
-        description: "", 
-        href: "/notes/" 
-      },
+      // { 
+      //   title: "notes", 
+      //   description: "", 
+      //   href: "/notes/" 
+      // },
     ]
   }
 })
