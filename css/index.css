@@ -7,9 +7,9 @@
 
 @font-face {
     font-family: 'Luam';
-    src: url('./Luam-Bold.otf') format('opentype');
     font-style: normal;
     font-weight: 700;
+    src: url('./Luam-Bold.otf') format('opentype');
 }
 
 html {
@@ -25,7 +25,11 @@ html {
 
 body {
     align-items: flex-start;
+    background-blend-mode: multiply;
     background-color: var(--forest);
+    background-image: url('../img/canvas-tile.png');
+    background-repeat: repeat;
+    background-size: 32em;
     color: var(--white-d);
     display: flex;
     flex-direction: column;
@@ -33,40 +37,35 @@ body {
     height: 100%;
     justify-content: flex-start;
     margin: 0;
-    padding: 1rem;
-    font-size: 1rem;
-    background-image: url('../img/canvas-tile.png');
-    background-repeat: repeat;
-    background-size: 32rem;
-    background-blend-mode: multiply;
+    padding: 1em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    line-height: 3rem;
+    line-height: 3em;
     margin: 0;
 }
 
 h1 {
     font-family: "Luam", sans-serif;
-    font-size: 3.2rem;
-    font-weight: bold;
-    text-transform: lowercase;
+    font-size: 3.125em;
+    font-weight: 700;
     text-align: center;
-    line-height: 1.5rem;
-    margin-bottom: .5rem;
+    text-transform: lowercase;
+    line-height: 0.5em;
+    margin-bottom: 0.125em;
 }
 
 h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.5em;
+    font-weight: 700;
+    line-height: 1em;
     text-transform: lowercase;
-    line-height: 1.5rem;
-    transition: all .3s cubic-bezier(.25,.8,.25,1);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 p {
     font-weight: 400;
-    margin-top: .25rem;
+    margin-top: 0.25em;
 }
 
 a {
@@ -85,22 +84,19 @@ header {
     align-items: center;
     display: flex;
     justify-content: center;
-    margin-bottom: 2rem;
-    margin-right: 2rem;
+    margin: 0 2em 2em 0;
 }
 
 header a {
-    border-style: dotted;
-    border-width: 0.2rem;
-    border-color: var(--white-d);
-    padding: 1.2rem 0 1rem 0;
-    width: 6.7rem;
+    border: 0.2em dotted var(--white-d);
+    padding: 1.2em 0;
+    width: 6.7em;
 }
 
 main {
     display: grid;
+    gap: 0.75em;
     grid: repeat(auto-fit, 1fr) / auto-flow repeat(auto-fit, 120px);
-    grid-gap: 1vh;
     height: 100%;
     justify-content: flex-start;
     width: 100%;
@@ -108,26 +104,19 @@ main {
 
 main > * {
     opacity: 0.95;
-    width: 100%;
 }
 
 header:hover,
 .entry:hover {
-    text-shadow: 0 2px 4px rgba(0,0,0,0.25), 0 3px 3px rgba(0,0,0,0.22);
-    transform: translateY(-2px);
-    transition: all 0.25s cubic-bezier(.25,.8,.25,1);
     color: var(--salmon);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25), 0 3px 3px rgba(0, 0, 0, 0.22);
+    transform: translateY(-2px);
+    height: auto;
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 header a:hover {
     border-color: var(--salmon);
-}
-
-.entry svg,
-.entry img {
-    margin: 0;
-    padding: 0;
-    width: 100%;
 }
 
 @media screen and (min-width: 400px) {
