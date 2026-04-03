@@ -1,30 +1,35 @@
 "use strict";
 
 const linkData = [
+  // {
+  //   title: "Set×Set",
+  //   description: "An online version of the card game Set.",
+  //   href: "https://set-server.fly.dev/",
+  // },
+  // {
+  //   title: "Nona",
+  //   description: "A 3D nonogram puzzle generator.",
+  //   href: "/nona/",
+  // },
+  // {
+  //   title: "Babble",
+  //   description: "A familiar word game.",
+  //   href: "/babble/",
+  // },
+  // {
+  //   title: "Struc",
+  //   description: "A simple 2D structural analysis tool.",
+  //   href: "/struc/",
+  // },
+  // {
+  //   title: "SmoothLife",
+  //   description: "A WebGL shader for SmoothLife.",
+  //   href: "/smoothlife-shader/",
+  // },
   {
-    title: "Set×Set",
-    description: "An online version of the card game Set.",
-    href: "https://set-server.fly.dev/",
-  },
-  {
-    title: "Nona",
-    description: "A 3D nonogram puzzle generator.",
-    href: "/nona/",
-  },
-  {
-    title: "Babble",
-    description: "A familiar word game.",
-    href: "/babble/",
-  },
-  {
-    title: "Struc",
-    description: "A simple 2D structural analysis tool.",
-    href: "/struc/",
-  },
-  {
-    title: "SmoothLife",
-    description: "A WebGL shader for SmoothLife.",
-    href: "/smoothlife-shader/",
+    title: "Solitaire",
+    description: "",
+    href: "/solitaire/",
   },
   {
     title: "GitHub",
